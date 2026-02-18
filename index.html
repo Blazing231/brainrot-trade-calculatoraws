@@ -127,7 +127,7 @@ function checkTrade(){
   else if(your<their){ result.innerText="WIN ✅"; result.style.color="lime"; }
   else{ result.innerText="FAIR 🤝"; result.style.color="orange"; }
 }
-function formatMillions(val){return val.toLocaleString()+'M';}
+function formatMillions(val){return val.toLocaleString()+"M";}
 
 // ================= MONEY CALCULATOR =================
 const moneyDropdown=document.getElementById("moneyBrainrot");
@@ -148,21 +148,13 @@ function calculateMoney(){
   const finalTotal = basePower * levelMultiplier;
 
   document.getElementById("formulaDisplay").innerText =
-      `${formatMillions(base)} × ${multi} = ${formatMillions(basePower)} → × Level Multiplier (1.25^${level-1} ≈ ${formatLarge(levelMultiplier/1))})`;
+      `${formatMillions(base)} × ${multi} = ${formatMillions(basePower)} → × Level Multiplier (1.25^${level-1} ≈ ${levelMultiplier.toExponential(3)})`;
 
   document.getElementById("moneyResult").innerText =
       "Result: "+formatHuge(finalTotal);
 }
 
 // ================= BIG NUMBER FORMAT =================
-function formatLarge(num){
-  if(num<1e6) return num.toFixed(2);
-  const units=["Million","Billion","Trillion","Quadrillion","Quintillion","Sextillion","Septillion","Octillion"];
-  let n=num; let i=0;
-  while(n>=1000 && i<units.length-1){ n/=1000; i++; }
-  return n.toFixed(2)+" "+units[i];
-}
-
 function formatHuge(num){
   // Input num is in millions
   const units=["Million","Billion","Trillion","Quadrillion","Quintillion","Sextillion"];
