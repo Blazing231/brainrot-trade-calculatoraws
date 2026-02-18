@@ -2,73 +2,70 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Survive Lava Brainrot Calculator</title>
+<title>Survive Lava For Brainrot Calculator</title>
 <style>
   html,body{margin:0;padding:0;font-family:Arial;text-align:center;background:linear-gradient(-45deg,#1f1c2c,#928dab,#1f4037,#99f2c8);background-size:400% 400%;animation:gradientBG 15s ease infinite;color:white;}
   @keyframes gradientBG{0%{background-position:0% 50%;}50%{background-position:100% 50%;}100%{background-position:0% 50%;}}
   h1{color:#ff9a00;text-shadow:0 0 12px #ff7f50,0 0 25px #ff4500;margin-top:20px;}
-  .container-horizontal{display:flex;justify-content:center;flex-wrap:wrap;gap:30px;margin-top:20px;}
-  .trade-side,.money-box{padding:20px;border-radius:15px;border:2px solid #ff9a00;background:rgba(0,0,0,0.6);box-shadow:0 0 20px rgba(255,154,0,0.4);min-width:300px;flex:1;}
+  .section-box{padding:20px;border-radius:15px;border:2px solid #ff9a00;background:rgba(0,0,0,0.6);box-shadow:0 0 20px rgba(255,154,0,0.4);min-width:300px;margin:20px auto;}
   select,input,button{margin:5px;padding:6px;border-radius:6px;border:none;}
   button{background:#ff9a00;font-weight:bold;cursor:pointer;transition:0.3s;}
   button:hover{background:#ffaa00;transform:scale(1.05);}
   .brainrot-container{display:flex;flex-wrap:wrap;justify-content:center;gap:5px;margin-bottom:8px;align-items:center;}
   #result,#moneyResult{font-size:28px;font-weight:bold;margin-top:15px;text-shadow:0 0 12px #ff7f50,0 0 25px #ff4500;}
   hr{border:2px solid #ff9a00;width:60%;margin:30px auto;opacity:0.6;}
-  .spacer{height:50px;}
   .valueDisplay{color:#ffcc00;font-weight:bold;min-width:60px;text-align:right;}
+  .footer-text{padding:30px 0;font-size:26px;font-weight:bold;color:#ffd700;text-shadow:0 0 15px #ff7f50,0 0 25px #ff4500;background:rgba(0,0,0,0.8);}
 </style>
 </head>
 <body>
 
-<h1>🔥 Survive Lava Brainrot Calculator 🔥</h1>
+<h1>🔥 Survive Lava For Brainrot 🔥</h1>
 
-<div class="container-horizontal">
+<!-- Trade Checker -->
+<div class="section-box">
+  <h2>Trade Checker</h2>
 
-  <!-- TRADE CALCULATOR -->
-  <div class="trade-side">
-    <h2>Your Side</h2>
-    <div id="yourSide"></div>
-    <div id="yourTotalDisplay">Total: 0M</div>
-    <button onclick="addSlot('yourSide')">+ Add</button>
+  <h3>Your Side</h3>
+  <div id="yourSide"></div>
+  <div id="yourTotalDisplay">Total: 0M</div>
+  <button onclick="addSlot('yourSide')">+ Add Brainrot</button>
 
-    <h2>Their Side</h2>
-    <div id="theirSide"></div>
-    <div id="theirTotalDisplay">Total: 0M</div>
-    <button onclick="addSlot('theirSide')">+ Add</button>
+  <h3>Their Side</h3>
+  <div id="theirSide"></div>
+  <div id="theirTotalDisplay">Total: 0M</div>
+  <button onclick="addSlot('theirSide')">+ Add Brainrot</button>
 
-    <br>
-    <button onclick="checkTrade()">Check Trade</button>
-    <h2 id="result"></h2>
-  </div>
-
-  <!-- MONEY CALCULATOR -->
-  <div class="money-box">
-    <h2>💰 Money Calculator 💰</h2>
-    <label>Select Brainrot:</label><br>
-    <select id="moneyBrainrot"></select><br><br>
-
-    <label>Mutation:</label><br>
-    <select id="moneyMutation"></select><br><br>
-
-    <label>Moon Trait:</label>
-    <input type="checkbox" id="moneyMoon"><br><br>
-
-    <label>Level (1-100):</label><br>
-    <input type="number" id="moneyLevel" min="1" max="100" value="1"><br><br>
-
-    <label>Base Multiplier:</label><br>
-    <input type="number" id="moneyMultiplier" step="0.1" value="1"><br><br>
-
-    <div id="formulaDisplay"></div>
-    <h2 id="moneyResult">Result: 0</h2>
-  </div>
-
+  <br>
+  <button onclick="checkTrade()">Check Trade</button>
+  <h2 id="result"></h2>
 </div>
 
-<div class="spacer"></div>
+<!-- Money Calculator -->
+<div class="section-box">
+  <h2>💰 Money Calculator 💰</h2>
+  <label>Select Brainrot:</label><br>
+  <select id="moneyBrainrot"></select><br><br>
 
-<div style="padding:30px 0;font-size:26px;font-weight:bold;color:#ffd700;text-shadow:0 0 15px #ff7f50,0 0 25px #ff4500;background:rgba(0,0,0,0.8);">
+  <label>Mutation:</label><br>
+  <select id="moneyMutation"></select><br><br>
+
+  <label>Moon Trait:</label>
+  <input type="checkbox" id="moneyMoon"><br><br>
+
+  <label>Level (1-100):</label><br>
+  <input type="number" id="moneyLevel" min="1" max="100" value="1"><br><br>
+
+  <label>Base Multiplier:</label><br>
+  <input type="number" id="moneyMultiplier" step="0.1" value="1"><br><br>
+
+  <!-- Formula hidden -->
+  <div id="formulaDisplay" style="display:none;"></div>
+  <h2 id="moneyResult">Result: 0</h2>
+</div>
+
+<!-- Footer / Owner & Credits -->
+<div class="footer-text">
   Owner DC: qz94_<br>
   Credits to: Exotic4410
 </div>
@@ -140,7 +137,6 @@ function formatMillions(val){return val.toLocaleString()+"M";}
 const moneyDropdown=document.getElementById("moneyBrainrot");
 const moneyMutation=document.getElementById("moneyMutation");
 const moneyMoon=document.getElementById("moneyMoon");
-
 Object.keys(brainrots).forEach(name=>{
   const opt=document.createElement("option"); opt.value=name; opt.text=name+" (Base: "+formatMillions(brainrots[name].Base)+")"; moneyDropdown.appendChild(opt);
 });
@@ -148,9 +144,7 @@ mutations.forEach(m=>{
   const opt=document.createElement("option"); opt.value=m; opt.text=m;
   moneyMutation.appendChild(opt);
 });
-
 [moneyDropdown,moneyMutation,moneyMoon,document.getElementById("moneyLevel"),document.getElementById("moneyMultiplier")].forEach(el=>el.addEventListener("input",calculateMoney));
-
 function calculateMoney(){
   const brain=moneyDropdown.value;
   const mutation=moneyMutation.value;
@@ -158,19 +152,13 @@ function calculateMoney(){
   const level=parseInt(document.getElementById("moneyLevel").value);
   const multi=parseFloat(document.getElementById("moneyMultiplier").value);
   if(level<1||level>100||multi<=0) return;
-
   const base=brainrots[brain][mutation];
   const basePower = base * multi * moon;
   const levelMultiplier = Math.pow(1.25, level-1);
   const finalTotal = basePower * levelMultiplier;
-
-  document.getElementById("formulaDisplay").innerText =
-      `${formatMillions(base)} × ${multi} × ${moon} = ${formatMillions(basePower)} → × Level Multiplier (1.25^${level-1} ≈ ${levelMultiplier.toExponential(3)})`;
-
-  document.getElementById("moneyResult").innerText =
-      "Result: "+formatHuge(finalTotal);
+  document.getElementById("formulaDisplay").style.display="none"; // hidden
+  document.getElementById("moneyResult").innerText = "Result: "+formatHuge(finalTotal);
 }
-
 function formatHuge(num){
   const units=["Million","Billion","Trillion","Quadrillion","Quintillion","Sextillion"];
   let n=num, i=0;
