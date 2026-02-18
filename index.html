@@ -69,17 +69,17 @@ hr{border:2px solid #ff9a00;width:60%;margin:30px auto;opacity:0.6;}
 <script>
 // ================= VALUES =================
 const brainrots = {
-  "Disk": {Base:50000000,Gold:60000000,Diamond:80000000,Emerald:120000000,BloodMoon:160000000,Rainbow:400000000},
-  "Swag Soda": {Base:4500000,Gold:6750000,Diamond:9000000,Emerald:13500000,BloodMoon:18000000,Rainbow:45000000},
-  "Chilli": {Base:5000000,Gold:7500000,Diamond:10000000,Emerald:15000000,BloodMoon:20000000,Rainbow:50000000},
-  "Spazio Polare": {Base:5500000,Gold:8250000,Diamond:11000000,Emerald:16500000,BloodMoon:22000000,Rainbow:55000000},
-  "Pizza": {Base:6000000,Gold:9000000,Diamond:12000000,Emerald:18000000,BloodMoon:24000000,Rainbow:60000000},
-  "TicTac": {Base:7000000,Gold:10500000,Diamond:14000000,Emerald:21000000,BloodMoon:28000000,Rainbow:70000000},
-  "67": {Base:8500000,Gold:12750000,Diamond:17000000,Emerald:25500000,BloodMoon:34000000,Rainbow:85000000},
-  "Elephant": {Base:10000000,Gold:15000000,Diamond:20000000,Emerald:30000000,BloodMoon:40000000,Rainbow:100000000},
-  "Los Elephant": {Base:15000000,Gold:22500000,Diamond:30000000,Emerald:45000000,BloodMoon:60000000,Rainbow:150000000},
-  "Caylus-Steak": {Base:30000000,Gold:45000000,Diamond:60000000,Emerald:90000000,BloodMoon:120000000,Rainbow:300000000},
-  "Dragon": {Base:50000000,Gold:75000000,Diamond:100000000,Emerald:150000000,BloodMoon:200000000,Rainbow:500000000}
+  "Disk": {Base:50,Gold:60,Diamond:80,Emerald:120,BloodMoon:160,Rainbow:400},
+  "Swag Soda": {Base:45,Gold:67.5,Diamond:90,Emerald:135,BloodMoon:180,Rainbow:450},
+  "Chilli": {Base:50,Gold:75,Diamond:100,Emerald:150,BloodMoon:200,Rainbow:500},
+  "Spazio Polare": {Base:55,Gold:82.5,Diamond:110,Emerald:165,BloodMoon:220,Rainbow:550},
+  "Pizza": {Base:60,Gold:90,Diamond:120,Emerald:180,BloodMoon:240,Rainbow:600},
+  "TicTac": {Base:70,Gold:105,Diamond:140,Emerald:210,BloodMoon:280,Rainbow:700},
+  "67": {Base:85,Gold:127.5,Diamond:170,Emerald:255,BloodMoon:340,Rainbow:850},
+  "Elephant": {Base:100,Gold:150,Diamond:200,Emerald:300,BloodMoon:400,Rainbow:1000},
+  "Los Elephant": {Base:150,Gold:225,Diamond:300,Emerald:450,BloodMoon:600,Rainbow:1500},
+  "Caylus-Steak": {Base:300,Gold:450,Diamond:600,Emerald:900,BloodMoon:1200,Rainbow:3000},
+  "Dragon": {Base:500,Gold:750,Diamond:1000,Emerald:1500,BloodMoon:2000,Rainbow:5000}
 };
 const mutations=["Base","Gold","Diamond","Emerald","BloodMoon","Rainbow"];
 const moonMultiplier=3;
@@ -127,7 +127,7 @@ function checkTrade(){
   else if(your<their){ result.innerText="WIN ✅"; result.style.color="lime"; }
   else{ result.innerText="FAIR 🤝"; result.style.color="orange"; }
 }
-function formatMillions(val){return (val/1e6).toLocaleString()+'M';}
+function formatMillions(val){return val.toLocaleString()+'M';}
 
 // ================= MONEY CALCULATOR =================
 const moneyDropdown=document.getElementById("moneyBrainrot");
@@ -148,7 +148,7 @@ function calculateMoney(){
   const finalTotal = basePower * levelMultiplier;
 
   document.getElementById("formulaDisplay").innerText =
-      `${formatMillions(base)} × ${multi} = ${formatMillions(basePower)} → × Level Multiplier (1.25^${level-1} ≈ ${formatLarge(levelMultiplier)})`;
+      `${formatMillions(base)} × ${multi} = ${formatMillions(basePower)} → × Level Multiplier (1.25^${level-1} ≈ ${formatLarge(levelMultiplier/1))})`;
 
   document.getElementById("moneyResult").innerText =
       "Result: "+formatHuge(finalTotal);
@@ -164,6 +164,7 @@ function formatLarge(num){
 }
 
 function formatHuge(num){
+  // Input num is in millions
   const units=["Million","Billion","Trillion","Quadrillion","Quintillion","Sextillion"];
   let n=num, i=0;
   while(n>=1000 && i<units.length-1){ n/=1000; i++; }
