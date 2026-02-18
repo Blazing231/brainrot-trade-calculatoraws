@@ -1,23 +1,21 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Brainrot Trade + Money Calculator</title>
-  <style>
-    html, body { margin:0; padding:0; font-family:Arial; text-align:center;
-      background: linear-gradient(-45deg,#1f1c2c,#928dab,#1f4037,#99f2c8);
-      background-size:400% 400%; animation:gradientBG 15s ease infinite; color:white; }
-    @keyframes gradientBG { 0%{background-position:0% 50%;} 50%{background-position:100% 50%;} 100%{background-position:0% 50%;} }
-    h1{color:#ff9a00;text-shadow:0 0 10px #ff9a00;margin-top:20px;}
-    .container-horizontal{display:flex;justify-content:center;flex-wrap:wrap;gap:30px;margin-top:20px;}
-    .trade-side,.money-box{padding:20px;border-radius:15px;border:2px solid #ff9a00;background:rgba(0,0,0,0.6);box-shadow:0 0 20px rgba(255,154,0,0.4);min-width:300px;flex:1;}
-    select,input,button{margin:5px;padding:6px;border-radius:6px;border:none;}
-    button{background:#ff9a00;font-weight:bold;cursor:pointer;}
-    button:hover{background:#ffaa00;}
-    .brainrot-container{display:flex;flex-wrap:wrap;justify-content:center;gap:5px;margin-bottom:8px;}
-    #result{font-size:28px;font-weight:bold;margin-top:15px;}
-    hr{border:2px solid #ff9a00;width:60%;margin:30px auto;opacity:0.6;}
-    .spacer{height:50px;}
-  </style>
+<title>Brainrot Trade + Money Calculator</title>
+<style>
+html,body{margin:0;padding:0;font-family:Arial;text-align:center;background:linear-gradient(-45deg,#1f1c2c,#928dab,#1f4037,#99f2c8);background-size:400% 400%;animation:gradientBG 15s ease infinite;color:white;}
+@keyframes gradientBG{0%{background-position:0% 50%;}50%{background-position:100% 50%;}100%{background-position:0% 50%;}}
+h1{color:#ff9a00;text-shadow:0 0 10px #ff9a00;margin-top:20px;}
+.container-horizontal{display:flex;justify-content:center;flex-wrap:wrap;gap:30px;margin-top:20px;}
+.trade-side,.money-box{padding:20px;border-radius:15px;border:2px solid #ff9a00;background:rgba(0,0,0,0.6);box-shadow:0 0 20px rgba(255,154,0,0.4);min-width:300px;flex:1;}
+select,input,button{margin:5px;padding:6px;border-radius:6px;border:none;}
+button{background:#ff9a00;font-weight:bold;cursor:pointer;}
+button:hover{background:#ffaa00;}
+.brainrot-container{display:flex;flex-wrap:wrap;justify-content:center;gap:5px;margin-bottom:8px;}
+#result{font-size:28px;font-weight:bold;margin-top:15px;}
+hr{border:2px solid #ff9a00;width:60%;margin:30px auto;opacity:0.6;}
+.spacer{height:50px;}
+</style>
 </head>
 <body>
 
@@ -69,21 +67,22 @@
 
 <script>
 // ================= VALUES =================
+// Values in actual millions
 const brainrots = {
-  "Disk": {Base:4,Gold:6,Diamond:8,Emerald:12,BloodMoon:16,Rainbow:40},
-  "Swag Soda": {Base:4.5,Gold:6.75,Diamond:9,Emerald:13.5,BloodMoon:18,Rainbow:45},
-  "Chilli": {Base:5,Gold:7.5,Diamond:10,Emerald:15,BloodMoon:20,Rainbow:50},
-  "Spazio Polare": {Base:5.5,Gold:8.25,Diamond:11,Emerald:16.5,BloodMoon:22,Rainbow:55},
-  "Pizza": {Base:6,Gold:9,Diamond:12,Emerald:18,BloodMoon:24,Rainbow:60},
-  "TicTac": {Base:7,Gold:10.5,Diamond:14,Emerald:21,BloodMoon:28,Rainbow:70},
-  "67": {Base:8.5,Gold:12.75,Diamond:17,Emerald:25.5,BloodMoon:34,Rainbow:85},
-  "Elephant": {Base:10,Gold:15,Diamond:20,Emerald:30,BloodMoon:40,Rainbow:100},
-  "Los Elephant": {Base:15,Gold:22.5,Diamond:30,Emerald:45,BloodMoon:60,Rainbow:150},
-  "Caylus-Steak": {Base:30,Gold:45,Diamond:60,Emerald:90,BloodMoon:120,Rainbow:300},
-  "Dragon": {Base:50,Gold:75,Diamond:100,Emerald:150,BloodMoon:200,Rainbow:500}
+  "Disk": {Base:50000000,Gold:60000000,Diamond:80000000,Emerald:120000000,BloodMoon:160000000,Rainbow:400000000},
+  "Swag Soda": {Base:4500000,Gold:6750000,Diamond:9000000,Emerald:13500000,BloodMoon:18000000,Rainbow:45000000},
+  "Chilli": {Base:5000000,Gold:7500000,Diamond:10000000,Emerald:15000000,BloodMoon:20000000,Rainbow:50000000},
+  "Spazio Polare": {Base:5500000,Gold:8250000,Diamond:11000000,Emerald:16500000,BloodMoon:22000000,Rainbow:55000000},
+  "Pizza": {Base:6000000,Gold:9000000,Diamond:12000000,Emerald:18000000,BloodMoon:24000000,Rainbow:60000000},
+  "TicTac": {Base:7000000,Gold:10500000,Diamond:14000000,Emerald:21000000,BloodMoon:28000000,Rainbow:70000000},
+  "67": {Base:8500000,Gold:12750000,Diamond:17000000,Emerald:25500000,BloodMoon:34000000,Rainbow:85000000},
+  "Elephant": {Base:10000000,Gold:15000000,Diamond:20000000,Emerald:30000000,BloodMoon:40000000,Rainbow:100000000},
+  "Los Elephant": {Base:15000000,Gold:22500000,Diamond:30000000,Emerald:45000000,BloodMoon:60000000,Rainbow:150000000},
+  "Caylus-Steak": {Base:30000000,Gold:45000000,Diamond:60000000,Emerald:90000000,BloodMoon:120000000,Rainbow:300000000},
+  "Dragon": {Base:50000000,Gold:75000000,Diamond:100000000,Emerald:150000000,BloodMoon:200000000,Rainbow:500000000}
 };
-const mutations = ["Base","Gold","Diamond","Emerald","BloodMoon","Rainbow"];
-const moonMultiplier = 3;
+const mutations=["Base","Gold","Diamond","Emerald","BloodMoon","Rainbow"];
+const moonMultiplier=3;
 
 // ================= TRADE SYSTEM =================
 function createBrainrotSlot(){
@@ -98,7 +97,8 @@ function createBrainrotSlot(){
   const remove=document.createElement("button"); remove.innerText="Remove"; remove.onclick=()=>{container.remove(); updateTotals();};
   function updateValue(){
     const val=brainrots[selectBrainrot.value][selectMutation.value]*(moon.checked?moonMultiplier:1);
-    valueDisplay.innerText=val+"m"; updateTotals();
+    valueDisplay.innerText=formatMillions(val);
+    updateTotals();
   }
   selectBrainrot.onchange=updateValue; selectMutation.onchange=updateValue; moon.onchange=updateValue;
   container.appendChild(selectBrainrot); container.appendChild(selectMutation); container.appendChild(moonLabel);
@@ -118,8 +118,8 @@ function calculateTotal(side){
   return total;
 }
 function updateTotals(){
-  document.getElementById("yourTotalDisplay").innerText="Total: "+calculateTotal("yourSide")+"m";
-  document.getElementById("theirTotalDisplay").innerText="Total: "+calculateTotal("theirSide")+"m";
+  document.getElementById("yourTotalDisplay").innerText="Total: "+formatMillions(calculateTotal("yourSide"));
+  document.getElementById("theirTotalDisplay").innerText="Total: "+formatMillions(calculateTotal("theirSide"));
 }
 function checkTrade(){
   const your=calculateTotal("yourSide"); const their=calculateTotal("theirSide"); const result=document.getElementById("result");
@@ -127,11 +127,12 @@ function checkTrade(){
   else if(your<their){ result.innerText="WIN ✅"; result.style.color="lime"; }
   else{ result.innerText="FAIR 🤝"; result.style.color="orange"; }
 }
+function formatMillions(val){return (val/1e6).toLocaleString()+'M';}
 
-// ================= MONEY SYSTEM =================
+// ================= MONEY CALCULATOR =================
 const moneyDropdown=document.getElementById("moneyBrainrot");
 Object.keys(brainrots).forEach(name=>{
-  const opt=document.createElement("option"); opt.value=name; opt.text=name+" (Base: "+brainrots[name].Base+"m)"; moneyDropdown.appendChild(opt);
+  const opt=document.createElement("option"); opt.value=name; opt.text=name+" (Base: "+formatMillions(brainrots[name].Base)+")"; moneyDropdown.appendChild(opt);
 });
 [moneyDropdown,document.getElementById("moneyLevel"),document.getElementById("moneyMultiplier")].forEach(el=>el.addEventListener("input",calculateMoney));
 
@@ -140,25 +141,29 @@ function calculateMoney(){
   const level=parseInt(document.getElementById("moneyLevel").value);
   const multi=parseFloat(document.getElementById("moneyMultiplier").value);
   if(level<1||level>100||multi<=0) return;
-  const base=brainrots[brain].Base;
 
-  const basePower = base * multi;             // Base Power
+  const base=brainrots[brain].Base;           // Base in actual units
+  const basePower = base * multi;             // Base Power at level 1
   const levelMultiplier = Math.pow(1.25, level-1); // Level scaling
+  const finalTotal = basePower * levelMultiplier; // Final total
 
-  const finalTotal = basePower * levelMultiplier;
-
-  document.getElementById("formulaDisplay").innerText = `${base} × ${multi} = ${basePower}M → × Level Multiplier (1.25^${level-1} ≈ ${formatLarge(levelMultiplier)})`;
-  document.getElementById("moneyResult").innerText = "Result: "+formatLarge(finalTotal)+"/s";
+  document.getElementById("formulaDisplay").innerText = `${formatMillions(base)} × ${multi} = ${formatMillions(basePower)} → × Level Multiplier (1.25^${level-1} ≈ ${formatLarge(levelMultiplier)})`;
+  document.getElementById("moneyResult").innerText = "Result: "+formatHuge(finalTotal);
 }
 
 // ================= BIG NUMBER FORMAT =================
 function formatLarge(num){
-  const units=[
-    {v:1e33,s:"Qy"}, {v:1e30,s:"Qi"}, {v:1e27,s:"Sx"}, {v:1e24,s:"Sp"}, {v:1e21,s:"Sx"},
-    {v:1e18,s:"Qi"}, {v:1e15,s:"Qd"}, {v:1e12,s:"T"}, {v:1e9,s:"B"}, {v:1e6,s:"M"}
-  ];
-  for(let i=0;i<units.length;i++){ if(num>=units[i].v) return (num/units[i].v).toFixed(2)+units[i].s; }
-  return num.toFixed(2);
+  if(num<1e6) return num.toFixed(2);
+  const units=["M","B","T","Qa","Qi","Sx","Sp","Oc","No","Dc","Ud","Dd","Td","Qad","Qid","Sxd","Spd","Ocd","Nod","Vg","Qy"];
+  let n=num; let i=0;
+  while(n>=1000 && i<units.length-1){ n/=1000; i++; }
+  return n.toFixed(2)+" "+units[i];
+}
+
+function formatHuge(num){
+  let n=num; let units=["","M","B","T","Qa","Qi","Sx","Sp","Oc","No","Dc","Ud","Dd","Td","Qad","Qid","Sxd","Spd","Ocd","Nod","Vg","Qy"],i=0;
+  while(n>=1000 && i<units.length-1){ n/=1000; i++; }
+  return n.toFixed(2)+" "+units[i]+"/s";
 }
 </script>
 </body>
