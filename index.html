@@ -11,7 +11,7 @@ h1{color:#ff9a00;text-shadow:0 0 10px #ff9a00;margin-top:20px;}
 select,input,button{margin:5px;padding:6px;border-radius:6px;border:none;}
 button{background:#ff9a00;font-weight:bold;cursor:pointer;}
 button:hover{background:#ffaa00;}
-.brainrot-container{display:flex;flex-wrap:wrap;justify-content:center;gap:5px;margin-bottom:8px;}
+.brainrot-container{display:flex;flex-wrap:wrap;justify-content:center;gap:5px;margin-bottom:8px;align-items:center;}
 #result{font-size:28px;font-weight:bold;margin-top:15px;}
 hr{border:2px solid #ff9a00;width:60%;margin:30px auto;opacity:0.6;}
 .spacer{height:50px;}
@@ -68,7 +68,6 @@ hr{border:2px solid #ff9a00;width:60%;margin:30px auto;opacity:0.6;}
 
 <script>
 // ================= VALUES =================
-// Values in actual millions
 const brainrots = {
   "Disk": {Base:50000000,Gold:60000000,Diamond:80000000,Emerald:120000000,BloodMoon:160000000,Rainbow:400000000},
   "Swag Soda": {Base:4500000,Gold:6750000,Diamond:9000000,Emerald:13500000,BloodMoon:18000000,Rainbow:45000000},
@@ -143,28 +142,30 @@ function calculateMoney(){
   const multi=parseFloat(document.getElementById("moneyMultiplier").value);
   if(level<1||level>100||multi<=0) return;
 
-  const base=brainrots[brain].Base;           // Base in actual units
-  const basePower = base * multi;             // Base Power at level 1
-  const levelMultiplier = Math.pow(1.25, level-1); // Level scaling
-  const finalTotal = basePower * levelMultiplier; // Final total
+  const base=brainrots[brain].Base;               
+  const basePower = base * multi;                 
+  const levelMultiplier = Math.pow(1.25, level-1); 
+  const finalTotal = basePower * levelMultiplier;
 
-  document.getElementById("formulaDisplay").innerText = `${formatMillions(base)} × ${multi} = ${formatMillions(basePower)} → × Level Multiplier (1.25^${level-1} ≈ ${formatLarge(levelMultiplier)})`;
-  document.getElementById("moneyResult").innerText = "Result: "+formatHuge(finalTotal);
+  document.getElementById("formulaDisplay").innerText =
+      `${formatMillions(base)} × ${multi} = ${formatMillions(basePower)} → × Level Multiplier (1.25^${level-1} ≈ ${formatLarge(levelMultiplier)})`;
+
+  document.getElementById("moneyResult").innerText =
+      "Result: "+formatHuge(finalTotal);
 }
 
 // ================= BIG NUMBER FORMAT =================
 function formatLarge(num){
   if(num<1e6) return num.toFixed(2);
-  const units=["Million","Billion","Trillion","Quadrillion","Quintillion","Sextillion","Septillion","Octillion","Nonillion","Decillion","Undecillion","Duodecillion","Tredecillion","Quattuordecillion","Quindecillion","Sexdecillion","Septendecillion","Octodecillion","Novemdecillion","Vigintillion","Centillion"];
+  const units=["Million","Billion","Trillion","Quadrillion","Quintillion","Sextillion","Septillion","Octillion"];
   let n=num; let i=0;
   while(n>=1000 && i<units.length-1){ n/=1000; i++; }
   return n.toFixed(2)+" "+units[i];
 }
 
 function formatHuge(num){
-  let n=num;
-  const units=["Million","Billion","Trillion","Quadrillion","Quintillion","Sextillion","Septillion","Octillion","Nonillion","Decillion","Undecillion","Duodecillion","Tredecillion","Quattuordecillion","Quindecillion","Sexdecillion","Septendecillion","Octodecillion","Novemdecillion","Vigintillion","Centillion"];
-  let i=0;
+  const units=["Million","Billion","Trillion","Quadrillion","Quintillion","Sextillion"];
+  let n=num, i=0;
   while(n>=1000 && i<units.length-1){ n/=1000; i++; }
   return n.toFixed(2)+" "+units[i]+"/s";
 }
