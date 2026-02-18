@@ -15,6 +15,7 @@ button:hover{background:#ffaa00;}
 #result{font-size:28px;font-weight:bold;margin-top:15px;}
 hr{border:2px solid #ff9a00;width:60%;margin:30px auto;opacity:0.6;}
 .spacer{height:50px;}
+.valueDisplay{color:#ffcc00;font-weight:bold;min-width:60px;text-align:right;}
 </style>
 </head>
 <body>
@@ -27,12 +28,12 @@ hr{border:2px solid #ff9a00;width:60%;margin:30px auto;opacity:0.6;}
   <div class="trade-side">
     <h2>Your Side</h2>
     <div id="yourSide"></div>
-    <div id="yourTotalDisplay">Total: 0m</div>
+    <div id="yourTotalDisplay">Total: 0M</div>
     <button onclick="addSlot('yourSide')">+ Add</button>
 
     <h2>Their Side</h2>
     <div id="theirSide"></div>
-    <div id="theirTotalDisplay">Total: 0m</div>
+    <div id="theirTotalDisplay">Total: 0M</div>
     <button onclick="addSlot('theirSide')">+ Add</button>
 
     <br>
@@ -93,7 +94,7 @@ function createBrainrotSlot(){
   mutations.forEach(m=>{ const opt=document.createElement("option"); opt.value=m; opt.text=m; selectMutation.appendChild(opt);});
   const moon=document.createElement("input"); moon.type="checkbox";
   const moonLabel=document.createElement("label"); moonLabel.innerText="Moon x3"; moonLabel.appendChild(moon);
-  const valueDisplay=document.createElement("span");
+  const valueDisplay=document.createElement("span"); valueDisplay.className="valueDisplay"; valueDisplay.innerText="0M";
   const remove=document.createElement("button"); remove.innerText="Remove"; remove.onclick=()=>{container.remove(); updateTotals();};
   function updateValue(){
     const val=brainrots[selectBrainrot.value][selectMutation.value]*(moon.checked?moonMultiplier:1);
@@ -154,14 +155,16 @@ function calculateMoney(){
 // ================= BIG NUMBER FORMAT =================
 function formatLarge(num){
   if(num<1e6) return num.toFixed(2);
-  const units=["M","B","T","Qa","Qi","Sx","Sp","Oc","No","Dc","Ud","Dd","Td","Qad","Qid","Sxd","Spd","Ocd","Nod","Vg","Qy"];
+  const units=["Million","Billion","Trillion","Quadrillion","Quintillion","Sextillion","Septillion","Octillion","Nonillion","Decillion","Undecillion","Duodecillion","Tredecillion","Quattuordecillion","Quindecillion","Sexdecillion","Septendecillion","Octodecillion","Novemdecillion","Vigintillion","Centillion"];
   let n=num; let i=0;
   while(n>=1000 && i<units.length-1){ n/=1000; i++; }
   return n.toFixed(2)+" "+units[i];
 }
 
 function formatHuge(num){
-  let n=num; let units=["","M","B","T","Qa","Qi","Sx","Sp","Oc","No","Dc","Ud","Dd","Td","Qad","Qid","Sxd","Spd","Ocd","Nod","Vg","Qy"],i=0;
+  let n=num;
+  const units=["Million","Billion","Trillion","Quadrillion","Quintillion","Sextillion","Septillion","Octillion","Nonillion","Decillion","Undecillion","Duodecillion","Tredecillion","Quattuordecillion","Quindecillion","Sexdecillion","Septendecillion","Octodecillion","Novemdecillion","Vigintillion","Centillion"];
+  let i=0;
   while(n>=1000 && i<units.length-1){ n/=1000; i++; }
   return n.toFixed(2)+" "+units[i]+"/s";
 }
