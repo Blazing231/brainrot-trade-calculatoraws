@@ -170,7 +170,7 @@ function calculateMoney(){
   document.getElementById("moneyResult").innerText = "Result: "+formatHuge(finalTotal);
 }
 function formatHuge(num){
-  const units=["Million","Billion","Trillion","Quadrillion","Quintillion","Sextillion"];
+  const units=["M","B","T","Qd","Qn","Sx"];
   let n=num, i=0;
   while(n>=1000 && i<units.length-1){ n/=1000; i++; }
   return n.toFixed(2)+" "+units[i]+"/s";
