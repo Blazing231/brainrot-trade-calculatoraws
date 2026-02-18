@@ -47,6 +47,12 @@ hr{border:2px solid #ff9a00;width:60%;margin:30px auto;opacity:0.6;}
     <label>Select Brainrot:</label><br>
     <select id="moneyBrainrot"></select><br><br>
 
+    <label>Mutation:</label><br>
+    <select id="moneyMutation"></select><br><br>
+
+    <label>Moon Trait:</label>
+    <input type="checkbox" id="moneyMoon"><br><br>
+
     <label>Level (1-100):</label><br>
     <input type="number" id="moneyLevel" min="1" max="100" value="1"><br><br>
 
@@ -69,17 +75,17 @@ hr{border:2px solid #ff9a00;width:60%;margin:30px auto;opacity:0.6;}
 <script>
 // ================= VALUES =================
 const brainrots = {
-  "Disk": {Base:50,Gold:60,Diamond:80,Emerald:120,BloodMoon:160,Rainbow:400},
-  "Swag Soda": {Base:45,Gold:67.5,Diamond:90,Emerald:135,BloodMoon:180,Rainbow:450},
-  "Chilli": {Base:50,Gold:75,Diamond:100,Emerald:150,BloodMoon:200,Rainbow:500},
-  "Spazio Polare": {Base:55,Gold:82.5,Diamond:110,Emerald:165,BloodMoon:220,Rainbow:550},
-  "Pizza": {Base:60,Gold:90,Diamond:120,Emerald:180,BloodMoon:240,Rainbow:600},
-  "TicTac": {Base:70,Gold:105,Diamond:140,Emerald:210,BloodMoon:280,Rainbow:700},
-  "67": {Base:85,Gold:127.5,Diamond:170,Emerald:255,BloodMoon:340,Rainbow:850},
-  "Elephant": {Base:100,Gold:150,Diamond:200,Emerald:300,BloodMoon:400,Rainbow:1000},
-  "Los Elephant": {Base:150,Gold:225,Diamond:300,Emerald:450,BloodMoon:600,Rainbow:1500},
-  "Caylus-Steak": {Base:300,Gold:450,Diamond:600,Emerald:900,BloodMoon:1200,Rainbow:3000},
-  "Dragon": {Base:500,Gold:750,Diamond:1000,Emerald:1500,BloodMoon:2000,Rainbow:5000}
+  "Disk": {Base:4,Gold:6,Diamond:8,Emerald:12,BloodMoon:16,Rainbow:40},
+  "Swag Soda": {Base:4.5,Gold:6.75,Diamond:9,Emerald:13.5,BloodMoon:18,Rainbow:45},
+  "Chilli": {Base:5,Gold:7.5,Diamond:10,Emerald:15,BloodMoon:20,Rainbow:50},
+  "Spazio Polare": {Base:5.5,Gold:8.25,Diamond:11,Emerald:16.5,BloodMoon:22,Rainbow:55},
+  "Pizza": {Base:6,Gold:9,Diamond:12,Emerald:18,BloodMoon:24,Rainbow:60},
+  "TicTac": {Base:7,Gold:10.5,Diamond:14,Emerald:21,BloodMoon:28,Rainbow:70},
+  "67": {Base:8.5,Gold:12.75,Diamond:17,Emerald:25.5,BloodMoon:34,Rainbow:85},
+  "Elephant": {Base:10,Gold:15,Diamond:20,Emerald:30,BloodMoon:40,Rainbow:100},
+  "Los Elephant": {Base:15,Gold:22.5,Diamond:30,Emerald:45,BloodMoon:60,Rainbow:150},
+  "Caylus-Steak": {Base:30,Gold:45,Diamond:60,Emerald:90,BloodMoon:120,Rainbow:300},
+  "Dragon": {Base:50,Gold:75,Diamond:100,Emerald:150,BloodMoon:200,Rainbow:500}
 };
 const mutations=["Base","Gold","Diamond","Emerald","BloodMoon","Rainbow"];
 const moonMultiplier=3;
@@ -131,24 +137,34 @@ function formatMillions(val){return val.toLocaleString()+"M";}
 
 // ================= MONEY CALCULATOR =================
 const moneyDropdown=document.getElementById("moneyBrainrot");
+const moneyMutation=document.getElementById("moneyMutation");
+const moneyMoon=document.getElementById("moneyMoon");
+
 Object.keys(brainrots).forEach(name=>{
   const opt=document.createElement("option"); opt.value=name; opt.text=name+" (Base: "+formatMillions(brainrots[name].Base)+")"; moneyDropdown.appendChild(opt);
 });
-[moneyDropdown,document.getElementById("moneyLevel"),document.getElementById("moneyMultiplier")].forEach(el=>el.addEventListener("input",calculateMoney));
+mutations.forEach(m=>{
+  const opt=document.createElement("option"); opt.value=m; opt.text=m;
+  moneyMutation.appendChild(opt);
+});
+
+[moneyDropdown,moneyMutation,moneyMoon,document.getElementById("moneyLevel"),document.getElementById("moneyMultiplier")].forEach(el=>el.addEventListener("input",calculateMoney));
 
 function calculateMoney(){
   const brain=moneyDropdown.value;
+  const mutation=moneyMutation.value;
+  const moon=moneyMoon.checked?moonMultiplier:1;
   const level=parseInt(document.getElementById("moneyLevel").value);
   const multi=parseFloat(document.getElementById("moneyMultiplier").value);
   if(level<1||level>100||multi<=0) return;
 
-  const base=brainrots[brain].Base;               
-  const basePower = base * multi;                 
-  const levelMultiplier = Math.pow(1.25, level-1); 
+  const base=brainrots[brain][mutation];
+  const basePower = base * multi * moon;
+  const levelMultiplier = Math.pow(1.25, level-1);
   const finalTotal = basePower * levelMultiplier;
 
   document.getElementById("formulaDisplay").innerText =
-      `${formatMillions(base)} × ${multi} = ${formatMillions(basePower)} → × Level Multiplier (1.25^${level-1} ≈ ${levelMultiplier.toExponential(3)})`;
+      `${formatMillions(base)} × ${multi} × ${moon} = ${formatMillions(basePower)} → × Level Multiplier (1.25^${level-1} ≈ ${levelMultiplier.toExponential(3)})`;
 
   document.getElementById("moneyResult").innerText =
       "Result: "+formatHuge(finalTotal);
@@ -156,7 +172,6 @@ function calculateMoney(){
 
 // ================= BIG NUMBER FORMAT =================
 function formatHuge(num){
-  // Input num is in millions
   const units=["Million","Billion","Trillion","Quadrillion","Quintillion","Sextillion"];
   let n=num, i=0;
   while(n>=1000 && i<units.length-1){ n/=1000; i++; }
