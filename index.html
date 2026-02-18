@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Money Calculator</title>
+<title>Brainrot Calculator</title>
 
 <style>
 html, body{
@@ -28,19 +28,19 @@ html, body{
 }
 
 h1{
-    margin-top:25px;
+    margin-top:30px;
     color:#ff9a00;
     text-shadow:0 0 12px #ff7f50,0 0 25px #ff4500;
 }
 
 .section-box{
-    margin:50px auto;
+    margin:40px auto;
     padding:35px;
     border-radius:20px;
     border:3px solid #ff9a00;
     background:rgba(0,0,0,0.75);
     box-shadow:0 0 25px rgba(255,154,0,0.6);
-    max-width:1100px;
+    max-width:900px;
     transition:transform 0.3s ease;
 }
 
@@ -88,37 +88,14 @@ input[type="number"]{
     font-size:13px;
 }
 
-#moneyResult{
-    margin-top:30px;
-    font-size:30px;
+#moneyResult, #upgradeResult{
+    margin-top:20px;
+    font-size:28px;
     font-weight:bold;
     color:#ffd700;
     text-shadow:0 0 15px #ff7f50,0 0 30px #ff4500;
 }
 
-/* Breakdown table */
-.table-wrapper{
-    margin-top:40px;
-    max-height:400px;
-    overflow-y:auto;
-}
-
-table{
-    width:100%;
-    border-collapse:collapse;
-    font-size:14px;
-}
-
-th, td{
-    padding:8px;
-    border-bottom:1px solid rgba(255,255,255,0.1);
-}
-
-th{
-    color:#00ffcc;
-}
-
-/* Footer glow */
 .footer{
     margin-top:auto;
     padding:90px 0 40px 0;
@@ -129,12 +106,8 @@ th{
 }
 
 @keyframes glowPulse{
-    from{
-        text-shadow:0 0 10px #ff7f50,0 0 20px #ff4500;
-    }
-    to{
-        text-shadow:0 0 20px #ffd700,0 0 35px #ff8c00;
-    }
+    from{ text-shadow:0 0 10px #ff7f50,0 0 20px #ff4500; }
+    to{ text-shadow:0 0 20px #ffd700,0 0 35px #ff8c00; }
 }
 </style>
 </head>
@@ -142,168 +115,196 @@ th{
 
 <h1>💰 Brainrot Calculator 💰</h1>
 
+<!-- ================= MONEY CALCULATOR ================= -->
 <div class="section-box">
+<h2 style="color:#ffd700;">Money Calculator</h2>
+<div class="row">
 
-    <div class="row">
+<div class="field">
+<label>Brainrot:</label>
+<select id="moneyBrainrot"></select>
+</div>
 
-        <div class="field">
-            <label>Brainrot:</label>
-            <select id="moneyBrainrot"></select>
-        </div>
+<div class="field">
+<label>Mutation:</label>
+<select id="moneyMutation"></select>
+</div>
 
-        <div class="field">
-            <label>Mutation:</label>
-            <select id="moneyMutation"></select>
-        </div>
+<div class="field">
+<label>Level (1-100):</label>
+<input type="number" id="moneyLevel" min="1" max="100" value="1">
+</div>
 
-        <div class="field">
-            <label>Level (1-100):</label>
-            <input type="number" id="moneyLevel" min="1" max="100" value="1">
-        </div>
+<div class="field">
+<label>Base Multiplier:</label>
+<input type="number" id="moneyMultiplier" min="1" max="17" step="0.1" value="1">
+</div>
 
-        <div class="field">
-            <label>Base Multiplier:</label>
-            <input type="number" id="moneyMultiplier" min="1" max="17" step="0.1" value="1">
-        </div>
-
-        <div class="field moon">
-            <label>Moon Trait:</label>
-            <input type="checkbox" id="moneyMoon">
-            <small>×3</small>
-        </div>
-
-    </div>
-
-    <div id="moneyResult">Result: 0</div>
-
-    <div class="table-wrapper">
-        <table>
-            <thead>
-                <tr>
-                    <th>Upgrade</th>
-                    <th>Cost</th>
-                    <th>Total So Far</th>
-                </tr>
-            </thead>
-            <tbody id="breakdownBody"></tbody>
-        </table>
-    </div>
+<div class="field moon">
+<label>Moon Trait:</label>
+<input type="checkbox" id="moneyMoon">
+<small>×3</small>
+</div>
 
 </div>
 
+<div id="moneyResult">Result: 0</div>
+</div>
+
+<!-- ================= UPGRADE COST CALCULATOR ================= -->
+<div class="section-box">
+<h2 style="color:#00ffcc;">Upgrade Cost Calculator</h2>
+
+<div class="row">
+
+<div class="field">
+<label>Brainrot:</label>
+<select id="upgradeBrainrot"></select>
+</div>
+
+<div class="field">
+<label>Mutation:</label>
+<select id="upgradeMutation"></select>
+</div>
+
+<div class="field">
+<label>Start Level:</label>
+<input type="number" id="startLevel" min="1" max="100" value="90">
+</div>
+
+<div class="field">
+<label>End Level:</label>
+<input type="number" id="endLevel" min="1" max="100" value="100">
+</div>
+
+<div class="field">
+<label>Base Multiplier:</label>
+<input type="number" id="upgradeMultiplier" min="1" max="17" step="0.1" value="1">
+</div>
+
+<div class="field moon">
+<label>Moon Trait:</label>
+<input type="checkbox" id="upgradeMoon">
+<small>×3</small>
+</div>
+
+</div>
+
+<div id="upgradeResult">Total Cost: 0</div>
+</div>
+
 <div class="footer">
-    Creator: qn94_ (Blazing)<br>
-    Credits: exotic4410 (Exotic)
+Creator: qn94_ (Blazing)<br>
+Credits: exotic4410 (Exotic)
 </div>
 
 <script>
 const brainrots = {
-  "Disk": {Base:4,Gold:6,Diamond:8,Emerald:12,BloodMoon:16,Rainbow:40},
-  "Swag Soda": {Base:4.5,Gold:6.75,Diamond:9,Emerald:13.5,BloodMoon:18,Rainbow:45},
-  "Chilli": {Base:5,Gold:7.5,Diamond:10,Emerald:15,BloodMoon:20,Rainbow:50},
-  "Spazio Polare": {Base:5.5,Gold:8.25,Diamond:11,Emerald:16.5,BloodMoon:22,Rainbow:55},
-  "Pizza": {Base:6,Gold:9,Diamond:12,Emerald:18,BloodMoon:24,Rainbow:60},
-  "TicTac": {Base:7,Gold:10.5,Diamond:14,Emerald:21,BloodMoon:28,Rainbow:70},
-  "67": {Base:8.5,Gold:12.75,Diamond:17,Emerald:25.5,BloodMoon:34,Rainbow:85},
-  "Elephant": {Base:10,Gold:15,Diamond:20,Emerald:30,BloodMoon:40,Rainbow:100},
-  "Los Elephant": {Base:15,Gold:22.5,Diamond:30,Emerald:45,BloodMoon:60,Rainbow:150},
-  "Caylus-Steak": {Base:30,Gold:45,Diamond:60,Emerald:90,BloodMoon:120,Rainbow:300},
-  "Dragon": {Base:50,Gold:75,Diamond:100,Emerald:150,BloodMoon:200,Rainbow:500}
+"Disk": {Base:4,Gold:6,Diamond:8,Emerald:12,BloodMoon:16,Rainbow:40},
+"Swag Soda": {Base:4.5,Gold:6.75,Diamond:9,Emerald:13.5,BloodMoon:18,Rainbow:45},
+"Chilli": {Base:5,Gold:7.5,Diamond:10,Emerald:15,BloodMoon:20,Rainbow:50},
+"Spazio Polare": {Base:5.5,Gold:8.25,Diamond:11,Emerald:16.5,BloodMoon:22,Rainbow:55},
+"Pizza": {Base:6,Gold:9,Diamond:12,Emerald:18,BloodMoon:24,Rainbow:60},
+"TicTac": {Base:7,Gold:10.5,Diamond:14,Emerald:21,BloodMoon:28,Rainbow:70},
+"67": {Base:8.5,Gold:12.75,Diamond:17,Emerald:25.5,BloodMoon:34,Rainbow:85},
+"Elephant": {Base:10,Gold:15,Diamond:20,Emerald:30,BloodMoon:40,Rainbow:100},
+"Los Elephant": {Base:15,Gold:22.5,Diamond:30,Emerald:45,BloodMoon:60,Rainbow:150},
+"Caylus-Steak": {Base:30,Gold:45,Diamond:60,Emerald:90,BloodMoon:120,Rainbow:300},
+"Dragon": {Base:50,Gold:75,Diamond:100,Emerald:150,BloodMoon:200,Rainbow:500}
 };
 
 const mutations=["Base","Gold","Diamond","Emerald","BloodMoon","Rainbow"];
 const moonMultiplier=3;
 
-const moneyDropdown=document.getElementById("moneyBrainrot");
-const moneyMutation=document.getElementById("moneyMutation");
-const moneyMoon=document.getElementById("moneyMoon");
-const levelInput=document.getElementById("moneyLevel");
-const multiplierInput=document.getElementById("moneyMultiplier");
-const breakdownBody=document.getElementById("breakdownBody");
-
-Object.keys(brainrots).forEach(name=>{
-  const opt=document.createElement("option");
-  opt.value=name;
-  opt.text=name+" (Base: "+brainrots[name].Base+"M)";
-  moneyDropdown.appendChild(opt);
-});
-
-mutations.forEach(m=>{
-  const opt=document.createElement("option");
-  opt.value=m;
-  opt.text=m;
-  moneyMutation.appendChild(opt);
-});
-
-[moneyDropdown,moneyMutation,moneyMoon,levelInput,multiplierInput]
-.forEach(el=>el.addEventListener("input",updateAll));
-
-function updateAll(){
-    calculateMoney();
-    generateBreakdown();
+function populate(selectId){
+  const select=document.getElementById(selectId);
+  Object.keys(brainrots).forEach(name=>{
+    const opt=document.createElement("option");
+    opt.value=name;
+    opt.text=name;
+    select.appendChild(opt);
+  });
 }
 
+function populateMut(selectId){
+  const select=document.getElementById(selectId);
+  mutations.forEach(m=>{
+    const opt=document.createElement("option");
+    opt.value=m;
+    opt.text=m;
+    select.appendChild(opt);
+  });
+}
+
+// populate dropdowns
+populate("moneyBrainrot");
+populate("upgradeBrainrot");
+populateMut("moneyMutation");
+populateMut("upgradeMutation");
+
+document.querySelectorAll("input, select").forEach(el=>{
+  el.addEventListener("input",()=>{
+    calculateMoney();
+    calculateUpgradeCost();
+  });
+});
+
+// ========== MONEY CALCULATOR ==========
 function calculateMoney(){
-  const brain=moneyDropdown.value;
-  const mutation=moneyMutation.value;
-  const moon=moneyMoon.checked?moonMultiplier:1;
-  const level=parseInt(levelInput.value);
+  const brain=document.getElementById("moneyBrainrot").value;
+  const mutation=document.getElementById("moneyMutation").value;
+  const moon=document.getElementById("moneyMoon").checked?moonMultiplier:1;
+  const level=parseInt(document.getElementById("moneyLevel").value);
 
-  let multi=parseFloat(multiplierInput.value);
-  if(multi>17){
-    multi=17;
-    multiplierInput.value=17;
-  }
-
+  let multi=parseFloat(document.getElementById("moneyMultiplier").value);
+  if(multi>17){ multi=17; document.getElementById("moneyMultiplier").value=17; }
   if(level<1||level>100||multi<=0) return;
 
   const base=brainrots[brain][mutation];
-  const basePower = base * multi * moon;
-  const levelMultiplier = Math.pow(1.25, level-1);
-  const finalTotal = basePower * levelMultiplier;
+  const total=base*multi*moon*Math.pow(1.25,level-1);
 
   document.getElementById("moneyResult").innerText=
-      "Result: "+formatHuge(finalTotal)+"/s";
+  "Result: "+formatHuge(total)+"/s";
 }
 
-function generateBreakdown(){
-    breakdownBody.innerHTML="";
+// ========== UPGRADE COST CALCULATOR ==========
+function calculateUpgradeCost(){
+  const brain=document.getElementById("upgradeBrainrot").value;
+  const mutation=document.getElementById("upgradeMutation").value;
+  const moon=document.getElementById("upgradeMoon").checked?moonMultiplier:1;
 
-    const brain=moneyDropdown.value;
-    const mutation=moneyMutation.value;
-    const moon=moneyMoon.checked?moonMultiplier:1;
-    let multi=parseFloat(multiplierInput.value);
-    if(multi>17) multi=17;
+  let multi=parseFloat(document.getElementById("upgradeMultiplier").value);
+  if(multi>17){ multi=17; document.getElementById("upgradeMultiplier").value=17; }
 
-    const base=brainrots[brain][mutation]*multi*moon;
+  let start=parseInt(document.getElementById("startLevel").value);
+  let end=parseInt(document.getElementById("endLevel").value);
+  if(start<1) start=1;
+  if(end>100) end=100;
+  if(end<start) end=start;
 
-    let total=0;
+  const base=brainrots[brain][mutation]*multi*moon;
 
-    for(let level=1; level<=100; level++){
-        const cost = base * Math.pow(1.45, level-1);
-        total += cost;
+  let total=0;
+  for(let lvl=start; lvl<end; lvl++){
+    total += base*Math.pow(1.45, lvl-1);
+  }
 
-        const row=document.createElement("tr");
-        row.innerHTML=`
-            <td>${level} → ${level+1}</td>
-            <td>${formatHuge(cost)}</td>
-            <td>${formatHuge(total)}</td>
-        `;
-        breakdownBody.appendChild(row);
-    }
+  document.getElementById("upgradeResult").innerText=
+  `Total Cost: ${formatHuge(total)}`;
 }
 
 function formatHuge(num){
   const units=["M","B","T","Qd","Qn","Sx","Oc","No","Dc"];
   let i=0;
   while(num>=1000 && i<units.length-1){
-      num/=1000;
-      i++;
+    num/=1000;
+    i++;
   }
   return num.toFixed(2)+" "+units[i];
 }
 
-updateAll();
+calculateMoney();
+calculateUpgradeCost();
 </script>
 
 </body>
