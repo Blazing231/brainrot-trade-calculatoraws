@@ -1,184 +1,186 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8">
-<title>Survive Lava Brainrot Calculator</title>
-<style>
-  html,body{margin:0;padding:0;font-family:Arial;text-align:center;background:linear-gradient(-45deg,#1f1c2c,#928dab,#1f4037,#99f2c8);background-size:400% 400%;animation:gradientBG 15s ease infinite;color:white;}
-  @keyframes gradientBG{0%{background-position:0% 50%;}50%{background-position:100% 50%;}100%{background-position:0% 50%;}}
-  h1{color:#ff9a00;text-shadow:0 0 12px #ff7f50,0 0 25px #ff4500;margin-top:20px;}
-  .section-box{padding:20px;border-radius:15px;border:2px solid #ff9a00;background:rgba(0,0,0,0.6);box-shadow:0 0 20px rgba(255,154,0,0.4);min-width:700px;margin:20px auto;}
-  select,input,button{margin:5px;padding:6px;border-radius:6px;border:none;}
-  button{background:#ff9a00;font-weight:bold;cursor:pointer;transition:0.3s;}
-  button:hover{background:#ffaa00;transform:scale(1.05);}
-  .brainrot-container{display:flex;flex-wrap:wrap;justify-content:center;gap:5px;margin-bottom:8px;align-items:center;}
-  #result,#moneyResult{font-size:28px;font-weight:bold;margin-top:15px;text-shadow:0 0 12px #ff7f50,0 0 25px #ff4500;}
-  hr{border:2px solid #ff9a00;width:60%;margin:30px auto;opacity:0.6;}
-  .valueDisplay{color:#ffcc00;font-weight:bold;min-width:60px;text-align:right;}
-  .footer-text{padding:30px 0;font-size:26px;font-weight:bold;color:#ffd700;text-shadow:0 0 15px #ff7f50,0 0 25px #ff4500;background:rgba(0,0,0,0.8);}
-  .horizontal-flex{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;align-items:center;}
-  .horizontal-flex > div{display:flex;flex-direction:column;}
-</style>
+  <title>Survive Lava Trade & Money Calculator</title>
+  <style>
+    html, body { margin:0; padding:0; font-family: Arial; background: linear-gradient(-45deg,#1f1c2c,#928dab,#1f4037,#99f2c8); background-size:400% 400%; animation: gradientBG 15s ease infinite; color:white; }
+    @keyframes gradientBG { 0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%} }
+    h1{color:#ff9a00;text-shadow:0 0 8px #ff9a00;margin:20px 0;text-align:center;}
+    .trade-side{display:inline-block;vertical-align:top;margin:20px;padding:20px;border-radius:15px;border:2px solid #ff9a00;background:rgba(0,0,0,0.5);}
+    select,input[type="number"],input[type="checkbox"],button{margin:5px;padding:5px;border-radius:5px;border:none;}
+    button{background:#ff9a00;cursor:pointer;font-weight:bold;} button:hover{background:#ffaa00;}
+    .brainrot-container{display:flex;gap:5px;flex-wrap:wrap;align-items:center;justify-content:center;margin-bottom:8px;}
+    .valueDisplay{color:#ffcc00;font-weight:bold;min-width:60px;text-align:right;}
+    #result{font-size:28px;font-weight:bold;margin-top:20px;text-shadow:0 0 8px #ff9a00;}
+    hr{border:2px solid #ff9a00;width:60%;opacity:0.6;margin:20px auto;}
+    .calculator-container{display:flex;flex-wrap:wrap;justify-content:center;margin-top:30px;}
+    .calc-item{margin:5px;}
+    #moneyResult{font-size:24px;font-weight:bold;color:#00ff99;margin-top:15px;}
+    footer{position:fixed;bottom:0;left:0;width:100%;background:rgba(0,0,0,0.7);padding:15px 0;font-size:28px;font-weight:bold;color:#ffd700;text-shadow:0 0 12px #ff7f50,0 0 25px #ff4500;z-index:1000;text-align:center;}
+  </style>
 </head>
 <body>
 
-<h1>🔥 Survive Lava Brainrot 🔥</h1>
+<h1>🔥 Survive Lava For Brainrot 🔥</h1>
 
 <!-- Trade Checker -->
-<div class="section-box">
-  <h2>Trade Checker</h2>
-
-  <h3>Your Side</h3>
+<div class="trade-side">
+  <h2>Your Side</h2>
   <div id="yourSide"></div>
   <div id="yourTotalDisplay">Total: 0M</div>
-  <button onclick="addSlot('yourSide')">+ Add Brainrot</button>
+  <button onclick="addSlot('yourSide')">+ Add Another Brainrot</button>
+</div>
 
-  <h3>Their Side</h3>
+<div class="trade-side">
+  <h2>Their Side</h2>
   <div id="theirSide"></div>
   <div id="theirTotalDisplay">Total: 0M</div>
-  <button onclick="addSlot('theirSide')">+ Add Brainrot</button>
-
-  <br>
-  <button onclick="checkTrade()">Check Trade</button>
-  <h2 id="result"></h2>
+  <button onclick="addSlot('theirSide')">+ Add Another Brainrot</button>
 </div>
+
+<br>
+<button onclick="checkTrade()">Check Trade</button>
+<h2 id="result"></h2>
+
+<hr>
 
 <!-- Money Calculator -->
-<div class="section-box">
-  <h2>💰 Money Calculator 💰</h2>
-  <div class="horizontal-flex">
-    <div>
-      <label>Brainrot:</label>
-      <select id="moneyBrainrot"></select>
-    </div>
-    <div>
-      <label>Mutation:</label>
-      <select id="moneyMutation"></select>
-    </div>
-    <div>
-      <label>Level (1-100):</label>
-      <input type="number" id="moneyLevel" min="1" max="100" value="1" style="width:80px;">
-    </div>
-    <div>
-      <label>Base Multiplier:</label>
-      <input type="number" id="moneyMultiplier" step="0.1" value="1" style="width:80px;">
-    </div>
-    <div>
-      <label>Moon Trait:</label>
-      <input type="checkbox" id="moneyMoon"> ×3
-    </div>
+<div class="calculator-container">
+  <div class="calc-item">
+    <label>Brainrot:</label>
+    <select id="calcBrainrot"></select>
   </div>
-
-  <div id="formulaDisplay" style="display:none;"></div>
-  <h2 id="moneyResult">Result: 0</h2>
+  <div class="calc-item">
+    <label>Mutation:</label>
+    <select id="calcMutation">
+      <option value="Base">Base</option>
+      <option value="Gold">Gold</option>
+      <option value="Diamond">Diamond</option>
+      <option value="Emerald">Emerald</option>
+      <option value="BloodMoon">BloodMoon</option>
+      <option value="Rainbow">Rainbow</option>
+    </select>
+  </div>
+  <div class="calc-item">
+    <label>Level:</label>
+    <input type="number" id="calcLevel" value="1" min="1" max="100">
+  </div>
+  <div class="calc-item">
+    <label>Base Multiplier:</label>
+    <input type="number" id="calcBaseMulti" value="1" min="1" step="0.01">
+  </div>
+  <div class="calc-item">
+    <label>Moon Trait:</label>
+    <input type="checkbox" id="calcMoon">
+  </div>
 </div>
+<div id="moneyResult">Result: 0M</div>
 
-<!-- Footer / Owner & Credits -->
-<div class="footer-text">
+<footer>
   Owner DC: qz94_<br>
   Credits to: Exotic4410
-</div>
+</footer>
 
 <script>
-// ================= VALUES =================
+// Brainrots in RAW numbers (millions)
 const brainrots = {
-  "Disk": {Base:4000000,Gold:6000000,Diamond:8000000,Emerald:12000000,BloodMoon:16000000,Rainbow:40000000},
-  "Swag Soda": {Base:4500000,Gold:6750000,Diamond:9000000,Emerald:13500000,BloodMoon:18000000,Rainbow:45000000},
-  "Chilli": {Base:5000000,Gold:7500000,Diamond:10000000,Emerald:15000000,BloodMoon:20000000,Rainbow:50000000},
-  "Spazio Polare": {Base:5500000,Gold:8250000,Diamond:11000000,Emerald:16500000,BloodMoon:22000000,Rainbow:55000000},
-  "Pizza": {Base:6000000,Gold:9000000,Diamond:12000000,Emerald:18000000,BloodMoon:24000000,Rainbow:60000000},
-  "TicTac": {Base:7000000,Gold:10500000,Diamond:14000000,Emerald:21000000,BloodMoon:28000000,Rainbow:70000000},
-  "67": {Base:8500000,Gold:12750000,Diamond:17000000,Emerald:25500000,BloodMoon:34000000,Rainbow:85000000},
-  "Elephant": {Base:10000000,Gold:15000000,Diamond:20000000,Emerald:30000000,BloodMoon:40000000,Rainbow:100000000},
-  "Los Elephant": {Base:15000000,Gold:22500000,Diamond:30000000,Emerald:45000000,BloodMoon:60000000,Rainbow:150000000},
-  "Caylus-Steak": {Base:30000000,Gold:45000000,Diamond:60000000,Emerald:90000000,BloodMoon:120000000,Rainbow:300000000},
-  "Dragon": {Base:50000000,Gold:75000000,Diamond:100000000,Emerald:150000000,BloodMoon:200000000,Rainbow:500000000}
+  "Disk": {Base:4000000},
+  "Swag Soda": {Base:4500000},
+  "Chilli": {Base:5000000},
+  "Spazio Polare": {Base:5500000},
+  "Pizza": {Base:6000000},
+  "TicTac": {Base:7000000},
+  "67": {Base:8500000},
+  "Elephant": {Base:10000000},
+  "Los Elephant": {Base:15000000},
+  "Caylus-Steak": {Base:30000000},
+  "Dragon": {Base:50000000}
 };
-const mutations=["Base","Gold","Diamond","Emerald","BloodMoon","Rainbow"];
-const moonMultiplier=3;
+const mutations = ["Base","Gold","Diamond","Emerald","BloodMoon","Rainbow"];
+const mutationMultiplier = {"Base":1,"Gold":1.5,"Diamond":2,"Emerald":3,"BloodMoon":4,"Rainbow":10};
+const moonMultiplier = 3;
 
-// ================= TRADE SYSTEM =================
+// Trade Checker functions
 function createBrainrotSlot(){
   const container=document.createElement("div"); container.className="brainrot-container";
   const selectBrainrot=document.createElement("select");
-  Object.keys(brainrots).forEach(b=>{ const opt=document.createElement("option"); opt.value=b; opt.text=b; selectBrainrot.appendChild(opt);});
+  Object.keys(brainrots).forEach(b=>{const opt=document.createElement("option"); opt.value=b; opt.text=b; selectBrainrot.appendChild(opt);});
   const selectMutation=document.createElement("select");
-  mutations.forEach(m=>{ const opt=document.createElement("option"); opt.value=m; opt.text=m; selectMutation.appendChild(opt);});
-  const moon=document.createElement("input"); moon.type="checkbox";
-  const moonLabel=document.createElement("label"); moonLabel.innerText="Moon x3"; moonLabel.appendChild(moon);
-  const valueDisplay=document.createElement("span"); valueDisplay.className="valueDisplay"; valueDisplay.innerText="0M";
-  const remove=document.createElement("button"); remove.innerText="Remove"; remove.onclick=()=>{container.remove(); updateTotals();};
+  mutations.forEach(m=>{const opt=document.createElement("option"); opt.value=m; opt.text=m; selectMutation.appendChild(opt);});
+  const moonCheckbox=document.createElement("input"); moonCheckbox.type="checkbox";
+  const moonLabel=document.createElement("label"); moonLabel.textContent="Moon ×3"; moonLabel.appendChild(moonCheckbox);
+  const valueDisplay=document.createElement("span"); valueDisplay.className="valueDisplay"; valueDisplay.textContent="0M";
+  const removeBtn=document.createElement("button"); removeBtn.textContent="Remove"; removeBtn.onclick=()=>{container.remove(); updateTotals();};
   function updateValue(){
-    const val=brainrots[selectBrainrot.value][selectMutation.value]*(moon.checked?moonMultiplier:1);
-    valueDisplay.innerText=formatShortInt(val);
+    const brain=selectBrainrot.value;
+    const mutation=selectMutation.value;
+    const val=brainrots[brain].Base*mutationMultiplier[mutation]*(moonCheckbox.checked?moonMultiplier:1);
+    valueDisplay.textContent=formatShortHuge(val);
     updateTotals();
   }
-  selectBrainrot.onchange=updateValue; selectMutation.onchange=updateValue; moon.onchange=updateValue;
-  container.appendChild(selectBrainrot); container.appendChild(selectMutation); container.appendChild(moonLabel);
-  container.appendChild(valueDisplay); container.appendChild(remove);
+  selectBrainrot.onchange=updateValue; selectMutation.onchange=updateValue; moonCheckbox.onchange=updateValue;
+  container.appendChild(selectBrainrot); container.appendChild(selectMutation); container.appendChild(moonLabel); container.appendChild(valueDisplay); container.appendChild(removeBtn);
   return container;
 }
 document.getElementById("yourSide").appendChild(createBrainrotSlot());
 document.getElementById("theirSide").appendChild(createBrainrotSlot());
-function addSlot(side){ document.getElementById(side).appendChild(createBrainrotSlot()); }
-function calculateTotal(side){
+function addSlot(sideId){document.getElementById(sideId).appendChild(createBrainrotSlot());}
+function calculateTotal(sideId){
   let total=0;
-  document.querySelectorAll("#"+side+" .brainrot-container").forEach(c=>{
-    const selects=c.querySelectorAll("select"); const brain=selects[0].value; const mutation=selects[1].value;
+  document.getElementById(sideId).querySelectorAll(".brainrot-container").forEach(c=>{
+    const brain=c.querySelector("select").value;
+    const mutation=c.querySelectorAll("select")[1].value;
     const moon=c.querySelector("input").checked?moonMultiplier:1;
-    total+=brainrots[brain][mutation]*moon;
+    total+=brainrots[brain].Base*mutationMultiplier[mutation]*moon;
   });
   return total;
 }
 function updateTotals(){
-  document.getElementById("yourTotalDisplay").innerText="Total: "+formatShortInt(calculateTotal("yourSide"));
-  document.getElementById("theirTotalDisplay").innerText="Total: "+formatShortInt(calculateTotal("theirSide"));
+  document.getElementById("yourTotalDisplay").innerText="Total: "+formatShortHuge(calculateTotal("yourSide"));
+  document.getElementById("theirTotalDisplay").innerText="Total: "+formatShortHuge(calculateTotal("theirSide"));
 }
 function checkTrade(){
-  const your=calculateTotal("yourSide"); const their=calculateTotal("theirSide"); const result=document.getElementById("result");
-  if(your>their){ result.innerText="LOSE ❌"; result.style.color="red"; }
-  else if(your<their){ result.innerText="WIN ✅"; result.style.color="lime"; }
-  else{ result.innerText="FAIR 🤝"; result.style.color="orange"; }
+  updateTotals();
+  const yourTotal=calculateTotal("yourSide");
+  const theirTotal=calculateTotal("theirSide");
+  const result=document.getElementById("result");
+  if(yourTotal>theirTotal){result.innerText="LOSE ❌"; result.style.color="red";}
+  else if(yourTotal<theirTotal){result.innerText="WIN ✅"; result.style.color="lime";}
+  else{result.innerText="FAIR 🤝"; result.style.color="orange";}
 }
 
-// ================= MONEY CALCULATOR =================
-const moneyDropdown=document.getElementById("moneyBrainrot");
-const moneyMutation=document.getElementById("moneyMutation");
-const moneyMoon=document.getElementById("moneyMoon");
-Object.keys(brainrots).forEach(name=>{
-  const opt=document.createElement("option"); opt.value=name; opt.text=name+" (Base: "+formatShortInt(brainrots[name].Base)+")"; moneyDropdown.appendChild(opt);
-});
-mutations.forEach(m=>{
-  const opt=document.createElement("option"); opt.value=m; opt.text=m;
-  moneyMutation.appendChild(opt);
-});
-[moneyDropdown,moneyMutation,moneyMoon,document.getElementById("moneyLevel"),document.getElementById("moneyMultiplier")].forEach(el=>el.addEventListener("input",calculateMoney));
+// Money Calculator
+const brainrotSelect=document.getElementById("calcBrainrot");
+Object.keys(brainrots).forEach(b=>{const opt=document.createElement("option"); opt.value=b; opt.text=b; brainrotSelect.appendChild(opt);});
 function calculateMoney(){
-  const brain=moneyDropdown.value;
-  const mutation=moneyMutation.value;
-  const moon=moneyMoon.checked?moonMultiplier:1;
-  const level=parseInt(document.getElementById("moneyLevel").value);
-  const multi=parseFloat(document.getElementById("moneyMultiplier").value);
-  if(level<1||level>100||multi<=0) return;
-  const base=brainrots[brain][mutation];
-  const basePower = base * multi * moon;       // Moon applies here only
-  const levelMultiplier = Math.pow(1.25, level-1); // Level only
-  const finalTotal = basePower * levelMultiplier;
-  document.getElementById("formulaDisplay").style.display="none"; // hidden
-  document.getElementById("moneyResult").innerText = "Result: "+formatShortHuge(finalTotal);
+  const brain=brainrotSelect.value;
+  const mutation=document.getElementById("calcMutation").value;
+  const level=parseInt(document.getElementById("calcLevel").value);
+  const baseMulti=parseFloat(document.getElementById("calcBaseMulti").value);
+  const moon=document.getElementById("calcMoon").checked?moonMultiplier:1;
+  let basePower=brainrots[brain].Base*mutationMultiplier[mutation]*baseMulti*moon;
+  let levelMultiplier=Math.pow(1.25,level-1);
+  let total=basePower*levelMultiplier;
+  document.getElementById("moneyResult").innerText="Result: "+formatShortHuge(total);
 }
+document.getElementById("calcBrainrot").onchange=calculateMoney;
+document.getElementById("calcMutation").onchange=calculateMoney;
+document.getElementById("calcLevel").oninput=calculateMoney;
+document.getElementById("calcBaseMulti").oninput=calculateMoney;
+document.getElementById("calcMoon").onchange=calculateMoney;
 
-// ================= FORMAT FUNCTIONS =================
-function formatShortInt(num){
-  if(num>=1000000) return Math.floor(num/1000000)+"M";
-  return num.toLocaleString();
-}
+// Formatting huge numbers
 function formatShortHuge(num){
   const units=["M","B","T","Qd","Qn","Sx"];
-  let n=num, i=0;
-  while(n>=1000 && i<units.length-1){ n/=1000; i++; }
-  return n.toFixed(2)+" "+units[i]+"/s";
+  let n=num,i=0;
+  while(n>=1000 && i<units.length-1){n/=1000;i++;}
+  let display=(n%1===0)?n.toFixed(0):n.toFixed(2);
+  return display+" "+units[i];
 }
+
+// Initial calculation
+calculateMoney();
 </script>
+
 </body>
 </html>
