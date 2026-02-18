@@ -2,179 +2,188 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Survive Lava Brainrot Calculator</title>
+<title>Money Calculator</title>
+
 <style>
-  html,body{margin:0;padding:0;font-family:Arial;text-align:center;background:linear-gradient(-45deg,#1f1c2c,#928dab,#1f4037,#99f2c8);background-size:400% 400%;animation:gradientBG 15s ease infinite;color:white;}
-  @keyframes gradientBG{0%{background-position:0% 50%;}50%{background-position:100% 50%;}100%{background-position:0% 50%;}}
-  h1{color:#ff9a00;text-shadow:0 0 12px #ff7f50,0 0 25px #ff4500;margin-top:20px;}
-  .section-box{padding:20px;border-radius:15px;border:2px solid #ff9a00;background:rgba(0,0,0,0.6);box-shadow:0 0 20px rgba(255,154,0,0.4);min-width:700px;margin:20px auto;}
-  select,input,button{margin:5px;padding:6px;border-radius:6px;border:none;}
-  button{background:#ff9a00;font-weight:bold;cursor:pointer;transition:0.3s;}
-  button:hover{background:#ffaa00;transform:scale(1.05);}
-  .brainrot-container{display:flex;flex-wrap:wrap;justify-content:center;gap:5px;margin-bottom:8px;align-items:center;}
-  #result,#moneyResult{font-size:28px;font-weight:bold;margin-top:15px;text-shadow:0 0 12px #ff7f50,0 0 25px #ff4500;}
-  hr{border:2px solid #ff9a00;width:60%;margin:30px auto;opacity:0.6;}
-  .valueDisplay{color:#ffcc00;font-weight:bold;min-width:60px;text-align:right;}
-  .footer-text{padding:30px 0;font-size:26px;font-weight:bold;color:#ffd700;text-shadow:0 0 15px #ff7f50,0 0 25px #ff4500;background:rgba(0,0,0,0.8);}
-  .horizontal-flex{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;align-items:center;}
-  .horizontal-flex > div{display:flex;flex-direction:column;}
+html, body{
+    margin:0;
+    padding:0;
+    font-family:Arial, sans-serif;
+    text-align:center;
+    color:white;
+
+    background: linear-gradient(-45deg,#1f1c2c,#928dab,#1f4037,#99f2c8);
+    background-size:400% 400%;
+    animation: gradientBG 15s ease infinite;
+
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+}
+
+@keyframes gradientBG{
+    0%{background-position:0% 50%;}
+    50%{background-position:100% 50%;}
+    100%{background-position:0% 50%;}
+}
+
+h1{
+    margin-top:25px;
+    color:#ff9a00;
+    text-shadow:0 0 12px #ff7f50,0 0 25px #ff4500;
+}
+
+.section-box{
+    margin:50px auto;
+    padding:35px;
+    border-radius:20px;
+    border:3px solid #ff9a00;
+    background:rgba(0,0,0,0.75);
+    box-shadow:0 0 25px rgba(255,154,0,0.6);
+    max-width:1100px;
+}
+
+input{
+    padding:7px 10px;
+    border-radius:8px;
+    border:none;
+    font-size:14px;
+    width:150px;
+}
+
+button{
+    padding:8px 15px;
+    border:none;
+    border-radius:8px;
+    background:#ff9a00;
+    color:white;
+    font-weight:bold;
+    cursor:pointer;
+    margin-left:10px;
+}
+
+button:hover{
+    background:#ff7f00;
+}
+
+/* Table styling */
+table{
+    width:100%;
+    margin-top:30px;
+    border-collapse:collapse;
+    font-size:14px;
+}
+
+th, td{
+    padding:8px;
+    border-bottom:1px solid rgba(255,255,255,0.1);
+}
+
+th{
+    color:#ffd700;
+}
+
+tbody{
+    max-height:400px;
+    overflow-y:auto;
+}
+
+.table-wrapper{
+    max-height:400px;
+    overflow-y:auto;
+    margin-top:20px;
+}
+
+/* Footer glow */
+.footer{
+    margin-top:auto;
+    padding:80px 0 40px 0;
+    font-size:20px;
+    font-weight:bold;
+    color:#ffd700;
+    animation: glowPulse 2.5s infinite alternate;
+}
+
+@keyframes glowPulse{
+    from{
+        text-shadow:0 0 10px #ff7f50,0 0 20px #ff4500;
+    }
+    to{
+        text-shadow:0 0 20px #ffd700,0 0 35px #ff8c00;
+    }
+}
 </style>
 </head>
 <body>
 
-<h1>🔥 Survive Lava Brainrot 🔥</h1>
+<h1>💰 Upgrade Breakdown Calculator 💰</h1>
 
-<!-- Trade Checker -->
 <div class="section-box">
-  <h2>Trade Checker</h2>
 
-  <h3>Your Side</h3>
-  <div id="yourSide"></div>
-  <div id="yourTotalDisplay">Total: 0M</div>
-  <button onclick="addSlot('yourSide')">+ Add Brainrot</button>
+    <div>
+        <label>Level 1 Upgrade Cost:</label><br><br>
+        <input type="number" id="baseCost" step="0.01" placeholder="Enter cost at Level 1">
+        <button onclick="generateBreakdown()">Generate Breakdown</button>
+    </div>
 
-  <h3>Their Side</h3>
-  <div id="theirSide"></div>
-  <div id="theirTotalDisplay">Total: 0M</div>
-  <button onclick="addSlot('theirSide')">+ Add Brainrot</button>
+    <div class="table-wrapper">
+        <table id="breakdownTable">
+            <thead>
+                <tr>
+                    <th>Upgrade</th>
+                    <th>Cost</th>
+                    <th>Total So Far</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
 
-  <br>
-  <button onclick="checkTrade()">Check Trade</button>
-  <h2 id="result"></h2>
 </div>
 
-<!-- Money Calculator -->
-<div class="section-box">
-  <h2>💰 Money Calculator 💰</h2>
-  <div class="horizontal-flex">
-    <div>
-      <label>Brainrot:</label>
-      <select id="moneyBrainrot"></select>
-    </div>
-    <div>
-      <label>Mutation:</label>
-      <select id="moneyMutation"></select>
-    </div>
-    <div>
-      <label>Level (1-100):</label>
-      <input type="number" id="moneyLevel" min="1" max="100" value="1" style="width:80px;">
-    </div>
-    <div>
-      <label>Base Multiplier:</label>
-      <input type="number" id="moneyMultiplier" step="0.1" value="1" style="width:80px;">
-    </div>
-    <div>
-      <label>Moon Trait:</label>
-      <input type="checkbox" id="moneyMoon"> ×3
-    </div>
-  </div>
-
-  <!-- Formula hidden -->
-  <div id="formulaDisplay" style="display:none;"></div>
-  <h2 id="moneyResult">Result: 0</h2>
-</div>
-
-<!-- Footer / Owner & Credits -->
-<div class="footer-text">
-  Owner DC: qz94_<br>
-  Credits to: Exotic4410
+<div class="footer">
+    Creator: qn94_ (Blazing)<br>
+    Credits: exotic4410 (Exotic)
 </div>
 
 <script>
-// ================= VALUES =================
-const brainrots = {
-  "Disk": {Base:4,Gold:6,Diamond:8,Emerald:12,BloodMoon:16,Rainbow:40},
-  "Swag Soda": {Base:4.5,Gold:6.75,Diamond:9,Emerald:13.5,BloodMoon:18,Rainbow:45},
-  "Chilli": {Base:5,Gold:7.5,Diamond:10,Emerald:15,BloodMoon:20,Rainbow:50},
-  "Spazio Polare": {Base:5.5,Gold:8.25,Diamond:11,Emerald:16.5,BloodMoon:22,Rainbow:55},
-  "Pizza": {Base:6,Gold:9,Diamond:12,Emerald:18,BloodMoon:24,Rainbow:60},
-  "TicTac": {Base:7,Gold:10.5,Diamond:14,Emerald:21,BloodMoon:28,Rainbow:70},
-  "67": {Base:8.5,Gold:12.75,Diamond:17,Emerald:25.5,BloodMoon:34,Rainbow:85},
-  "Elephant": {Base:10,Gold:15,Diamond:20,Emerald:30,BloodMoon:40,Rainbow:100},
-  "Los Elephant": {Base:15,Gold:22.5,Diamond:30,Emerald:45,BloodMoon:60,Rainbow:150},
-  "Caylus-Steak": {Base:30,Gold:45,Diamond:60,Emerald:90,BloodMoon:120,Rainbow:300},
-  "Dragon": {Base:50,Gold:75,Diamond:100,Emerald:150,BloodMoon:200,Rainbow:500}
-};
-const mutations=["Base","Gold","Diamond","Emerald","BloodMoon","Rainbow"];
-const moonMultiplier=3;
+function generateBreakdown(){
+    const baseCost = parseFloat(document.getElementById("baseCost").value);
+    if(!baseCost || baseCost<=0) return;
 
-// ================= TRADE SYSTEM =================
-function createBrainrotSlot(){
-  const container=document.createElement("div"); container.className="brainrot-container";
-  const selectBrainrot=document.createElement("select");
-  Object.keys(brainrots).forEach(b=>{ const opt=document.createElement("option"); opt.value=b; opt.text=b; selectBrainrot.appendChild(opt);});
-  const selectMutation=document.createElement("select");
-  mutations.forEach(m=>{ const opt=document.createElement("option"); opt.value=m; opt.text=m; selectMutation.appendChild(opt);});
-  const moon=document.createElement("input"); moon.type="checkbox";
-  const moonLabel=document.createElement("label"); moonLabel.innerText="Moon x3"; moonLabel.appendChild(moon);
-  const valueDisplay=document.createElement("span"); valueDisplay.className="valueDisplay"; valueDisplay.innerText="0M";
-  const remove=document.createElement("button"); remove.innerText="Remove"; remove.onclick=()=>{container.remove(); updateTotals();};
-  function updateValue(){
-    const val=brainrots[selectBrainrot.value][selectMutation.value]*(moon.checked?moonMultiplier:1);
-    valueDisplay.innerText=formatMillions(val);
-    updateTotals();
-  }
-  selectBrainrot.onchange=updateValue; selectMutation.onchange=updateValue; moon.onchange=updateValue;
-  container.appendChild(selectBrainrot); container.appendChild(selectMutation); container.appendChild(moonLabel);
-  container.appendChild(valueDisplay); container.appendChild(remove);
-  return container;
-}
-document.getElementById("yourSide").appendChild(createBrainrotSlot());
-document.getElementById("theirSide").appendChild(createBrainrotSlot());
-function addSlot(side){ document.getElementById(side).appendChild(createBrainrotSlot()); }
-function calculateTotal(side){
-  let total=0;
-  document.querySelectorAll("#"+side+" .brainrot-container").forEach(c=>{
-    const selects=c.querySelectorAll("select"); const brain=selects[0].value; const mutation=selects[1].value;
-    const moon=c.querySelector("input").checked?moonMultiplier:1;
-    total+=brainrots[brain][mutation]*moon;
-  });
-  return total;
-}
-function updateTotals(){
-  document.getElementById("yourTotalDisplay").innerText="Total: "+formatMillions(calculateTotal("yourSide"));
-  document.getElementById("theirTotalDisplay").innerText="Total: "+formatMillions(calculateTotal("theirSide"));
-}
-function checkTrade(){
-  const your=calculateTotal("yourSide"); const their=calculateTotal("theirSide"); const result=document.getElementById("result");
-  if(your>their){ result.innerText="LOSE ❌"; result.style.color="red"; }
-  else if(your<their){ result.innerText="WIN ✅"; result.style.color="lime"; }
-  else{ result.innerText="FAIR 🤝"; result.style.color="orange"; }
-}
-function formatMillions(val){return val.toLocaleString()+"M";}
+    const tbody = document.querySelector("#breakdownTable tbody");
+    tbody.innerHTML="";
 
-// ================= MONEY CALCULATOR =================
-const moneyDropdown=document.getElementById("moneyBrainrot");
-const moneyMutation=document.getElementById("moneyMutation");
-const moneyMoon=document.getElementById("moneyMoon");
-Object.keys(brainrots).forEach(name=>{
-  const opt=document.createElement("option"); opt.value=name; opt.text=name+" (Base: "+formatMillions(brainrots[name].Base)+")"; moneyDropdown.appendChild(opt);
-});
-mutations.forEach(m=>{
-  const opt=document.createElement("option"); opt.value=m; opt.text=m;
-  moneyMutation.appendChild(opt);
-});
-[moneyDropdown,moneyMutation,moneyMoon,document.getElementById("moneyLevel"),document.getElementById("moneyMultiplier")].forEach(el=>el.addEventListener("input",calculateMoney));
-function calculateMoney(){
-  const brain=moneyDropdown.value;
-  const mutation=moneyMutation.value;
-  const moon=moneyMoon.checked?moonMultiplier:1;
-  const level=parseInt(document.getElementById("moneyLevel").value);
-  const multi=parseFloat(document.getElementById("moneyMultiplier").value);
-  if(level<1||level>100||multi<=0) return;
-  const base=brainrots[brain][mutation];
-  const basePower = base * multi * moon;
-  const levelMultiplier = Math.pow(1.25, level-1);
-  const finalTotal = basePower * levelMultiplier;
-  document.getElementById("formulaDisplay").style.display="none"; // hidden
-  document.getElementById("moneyResult").innerText = "Result: "+formatHuge(finalTotal);
+    let total = 0;
+
+    for(let level=1; level<=100; level++){
+
+        const cost = baseCost * Math.pow(1.45, level-1);
+        total += cost;
+
+        const row = document.createElement("tr");
+
+        row.innerHTML = `
+            <td>${level} → ${level+1}</td>
+            <td>${formatHuge(cost)}</td>
+            <td>${formatHuge(total)}</td>
+        `;
+
+        tbody.appendChild(row);
+    }
 }
+
 function formatHuge(num){
-  const units=["M","B","T","Qd","Qn","Sx"];
-  let n=num, i=0;
-  while(n>=1000 && i<units.length-1){ n/=1000; i++; }
-  return n.toFixed(2)+" "+units[i]+"/s";
+    const units=["","K","M","B","T","Qd","Qn","Sx","Oc","No","Dc"];
+    let i=0;
+    while(num>=1000 && i<units.length-1){
+        num/=1000;
+        i++;
+    }
+    return num.toFixed(2)+" "+units[i];
 }
 </script>
+
 </body>
 </html>
