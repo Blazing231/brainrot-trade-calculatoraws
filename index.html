@@ -2,12 +2,12 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Survive Lava For Brainrot Calculator</title>
+<title>Survive Lava Brainrot Calculator</title>
 <style>
   html,body{margin:0;padding:0;font-family:Arial;text-align:center;background:linear-gradient(-45deg,#1f1c2c,#928dab,#1f4037,#99f2c8);background-size:400% 400%;animation:gradientBG 15s ease infinite;color:white;}
   @keyframes gradientBG{0%{background-position:0% 50%;}50%{background-position:100% 50%;}100%{background-position:0% 50%;}}
   h1{color:#ff9a00;text-shadow:0 0 12px #ff7f50,0 0 25px #ff4500;margin-top:20px;}
-  .section-box{padding:20px;border-radius:15px;border:2px solid #ff9a00;background:rgba(0,0,0,0.6);box-shadow:0 0 20px rgba(255,154,0,0.4);min-width:300px;margin:20px auto;}
+  .section-box{padding:20px;border-radius:15px;border:2px solid #ff9a00;background:rgba(0,0,0,0.6);box-shadow:0 0 20px rgba(255,154,0,0.4);min-width:700px;margin:20px auto;}
   select,input,button{margin:5px;padding:6px;border-radius:6px;border:none;}
   button{background:#ff9a00;font-weight:bold;cursor:pointer;transition:0.3s;}
   button:hover{background:#ffaa00;transform:scale(1.05);}
@@ -16,11 +16,13 @@
   hr{border:2px solid #ff9a00;width:60%;margin:30px auto;opacity:0.6;}
   .valueDisplay{color:#ffcc00;font-weight:bold;min-width:60px;text-align:right;}
   .footer-text{padding:30px 0;font-size:26px;font-weight:bold;color:#ffd700;text-shadow:0 0 15px #ff7f50,0 0 25px #ff4500;background:rgba(0,0,0,0.8);}
+  .horizontal-flex{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;align-items:center;}
+  .horizontal-flex > div{display:flex;flex-direction:column;}
 </style>
 </head>
 <body>
 
-<h1>🔥 Survive Lava For Brainrot 🔥</h1>
+<h1>🔥 Survive Lava Brainrot 🔥</h1>
 
 <!-- Trade Checker -->
 <div class="section-box">
@@ -44,22 +46,29 @@
 <!-- Money Calculator -->
 <div class="section-box">
   <h2>💰 Money Calculator 💰</h2>
-  <label>Select Brainrot:</label><br>
-  <select id="moneyBrainrot"></select><br><br>
+  <div class="horizontal-flex">
+    <div>
+      <label>Brainrot:</label>
+      <select id="moneyBrainrot"></select>
+    </div>
+    <div>
+      <label>Mutation:</label>
+      <select id="moneyMutation"></select>
+    </div>
+    <div>
+      <label>Level (1-100):</label>
+      <input type="number" id="moneyLevel" min="1" max="100" value="1" style="width:80px;">
+    </div>
+    <div>
+      <label>Base Multiplier:</label>
+      <input type="number" id="moneyMultiplier" step="0.1" value="1" style="width:80px;">
+    </div>
+    <div>
+      <label>Moon Trait:</label>
+      <input type="checkbox" id="moneyMoon"> ×3
+    </div>
+  </div>
 
-  <label>Mutation:</label><br>
-  <select id="moneyMutation"></select><br><br>
-
-  <label>Moon Trait:</label>
-  <input type="checkbox" id="moneyMoon"><br><br>
-
-  <label>Level (1-100):</label><br>
-  <input type="number" id="moneyLevel" min="1" max="100" value="1"><br><br>
-
-  <label>Base Multiplier:</label><br>
-  <input type="number" id="moneyMultiplier" step="0.1" value="1"><br><br>
-
-  <!-- Formula hidden -->
   <div id="formulaDisplay" style="display:none;"></div>
   <h2 id="moneyResult">Result: 0</h2>
 </div>
@@ -73,17 +82,17 @@
 <script>
 // ================= VALUES =================
 const brainrots = {
-  "Disk": {Base:4,Gold:6,Diamond:8,Emerald:12,BloodMoon:16,Rainbow:40},
-  "Swag Soda": {Base:4.5,Gold:6.75,Diamond:9,Emerald:13.5,BloodMoon:18,Rainbow:45},
-  "Chilli": {Base:5,Gold:7.5,Diamond:10,Emerald:15,BloodMoon:20,Rainbow:50},
-  "Spazio Polare": {Base:5.5,Gold:8.25,Diamond:11,Emerald:16.5,BloodMoon:22,Rainbow:55},
-  "Pizza": {Base:6,Gold:9,Diamond:12,Emerald:18,BloodMoon:24,Rainbow:60},
-  "TicTac": {Base:7,Gold:10.5,Diamond:14,Emerald:21,BloodMoon:28,Rainbow:70},
-  "67": {Base:8.5,Gold:12.75,Diamond:17,Emerald:25.5,BloodMoon:34,Rainbow:85},
-  "Elephant": {Base:10,Gold:15,Diamond:20,Emerald:30,BloodMoon:40,Rainbow:100},
-  "Los Elephant": {Base:15,Gold:22.5,Diamond:30,Emerald:45,BloodMoon:60,Rainbow:150},
-  "Caylus-Steak": {Base:30,Gold:45,Diamond:60,Emerald:90,BloodMoon:120,Rainbow:300},
-  "Dragon": {Base:50,Gold:75,Diamond:100,Emerald:150,BloodMoon:200,Rainbow:500}
+  "Disk": {Base:4000000,Gold:6000000,Diamond:8000000,Emerald:12000000,BloodMoon:16000000,Rainbow:40000000},
+  "Swag Soda": {Base:4500000,Gold:6750000,Diamond:9000000,Emerald:13500000,BloodMoon:18000000,Rainbow:45000000},
+  "Chilli": {Base:5000000,Gold:7500000,Diamond:10000000,Emerald:15000000,BloodMoon:20000000,Rainbow:50000000},
+  "Spazio Polare": {Base:5500000,Gold:8250000,Diamond:11000000,Emerald:16500000,BloodMoon:22000000,Rainbow:55000000},
+  "Pizza": {Base:6000000,Gold:9000000,Diamond:12000000,Emerald:18000000,BloodMoon:24000000,Rainbow:60000000},
+  "TicTac": {Base:7000000,Gold:10500000,Diamond:14000000,Emerald:21000000,BloodMoon:28000000,Rainbow:70000000},
+  "67": {Base:8500000,Gold:12750000,Diamond:17000000,Emerald:25500000,BloodMoon:34000000,Rainbow:85000000},
+  "Elephant": {Base:10000000,Gold:15000000,Diamond:20000000,Emerald:30000000,BloodMoon:40000000,Rainbow:100000000},
+  "Los Elephant": {Base:15000000,Gold:22500000,Diamond:30000000,Emerald:45000000,BloodMoon:60000000,Rainbow:150000000},
+  "Caylus-Steak": {Base:30000000,Gold:45000000,Diamond:60000000,Emerald:90000000,BloodMoon:120000000,Rainbow:300000000},
+  "Dragon": {Base:50000000,Gold:75000000,Diamond:100000000,Emerald:150000000,BloodMoon:200000000,Rainbow:500000000}
 };
 const mutations=["Base","Gold","Diamond","Emerald","BloodMoon","Rainbow"];
 const moonMultiplier=3;
@@ -101,7 +110,7 @@ function createBrainrotSlot(){
   const remove=document.createElement("button"); remove.innerText="Remove"; remove.onclick=()=>{container.remove(); updateTotals();};
   function updateValue(){
     const val=brainrots[selectBrainrot.value][selectMutation.value]*(moon.checked?moonMultiplier:1);
-    valueDisplay.innerText=formatMillions(val);
+    valueDisplay.innerText=formatShort(val);
     updateTotals();
   }
   selectBrainrot.onchange=updateValue; selectMutation.onchange=updateValue; moon.onchange=updateValue;
@@ -122,8 +131,8 @@ function calculateTotal(side){
   return total;
 }
 function updateTotals(){
-  document.getElementById("yourTotalDisplay").innerText="Total: "+formatMillions(calculateTotal("yourSide"));
-  document.getElementById("theirTotalDisplay").innerText="Total: "+formatMillions(calculateTotal("theirSide"));
+  document.getElementById("yourTotalDisplay").innerText="Total: "+formatShort(calculateTotal("yourSide"));
+  document.getElementById("theirTotalDisplay").innerText="Total: "+formatShort(calculateTotal("theirSide"));
 }
 function checkTrade(){
   const your=calculateTotal("yourSide"); const their=calculateTotal("theirSide"); const result=document.getElementById("result");
@@ -131,14 +140,13 @@ function checkTrade(){
   else if(your<their){ result.innerText="WIN ✅"; result.style.color="lime"; }
   else{ result.innerText="FAIR 🤝"; result.style.color="orange"; }
 }
-function formatMillions(val){return val.toLocaleString()+"M";}
 
 // ================= MONEY CALCULATOR =================
 const moneyDropdown=document.getElementById("moneyBrainrot");
 const moneyMutation=document.getElementById("moneyMutation");
 const moneyMoon=document.getElementById("moneyMoon");
 Object.keys(brainrots).forEach(name=>{
-  const opt=document.createElement("option"); opt.value=name; opt.text=name+" (Base: "+formatMillions(brainrots[name].Base)+")"; moneyDropdown.appendChild(opt);
+  const opt=document.createElement("option"); opt.value=name; opt.text=name+" (Base: "+formatShort(brainrots[name].Base)+")"; moneyDropdown.appendChild(opt);
 });
 mutations.forEach(m=>{
   const opt=document.createElement("option"); opt.value=m; opt.text=m;
@@ -157,10 +165,16 @@ function calculateMoney(){
   const levelMultiplier = Math.pow(1.25, level-1);
   const finalTotal = basePower * levelMultiplier;
   document.getElementById("formulaDisplay").style.display="none"; // hidden
-  document.getElementById("moneyResult").innerText = "Result: "+formatHuge(finalTotal);
+  document.getElementById("moneyResult").innerText = "Result: "+formatShortHuge(finalTotal);
 }
-function formatHuge(num){
-  const units=["Million","Billion","Trillion","Quadrillion","Quintillion","Sextillion"];
+
+// ================= FORMAT FUNCTIONS =================
+function formatShort(num){
+  if(num>=1000000) return (num/1000000).toFixed(2)+"M";
+  return num.toLocaleString();
+}
+function formatShortHuge(num){
+  const units=["M","B","T","Qd","Qn","Sx"];
   let n=num, i=0;
   while(n>=1000 && i<units.length-1){ n/=1000; i++; }
   return n.toFixed(2)+" "+units[i]+"/s";
