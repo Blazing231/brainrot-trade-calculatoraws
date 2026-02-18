@@ -1,57 +1,27 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Survive Lava For Brainrot Trade Calculator</title>
+  <title>Brainrot Trade + Money Calculator</title>
   <style>
-    html, body {
-      margin: 0; padding: 0; font-family: Arial; text-align: center;
+    html, body { margin:0; padding:0; font-family:Arial; text-align:center;
       background: linear-gradient(-45deg,#1f1c2c,#928dab,#1f4037,#99f2c8);
-      background-size: 400% 400%; animation: gradientBG 15s ease infinite;
-      color: white;
-    }
-
-    @keyframes gradientBG {
-      0% {background-position:0% 50%;}
-      50% {background-position:100% 50%;}
-      100% {background-position:0% 50%;}
-    }
-
-    h1 { color:#ff9a00; text-shadow:0 0 10px #ff9a00; margin-top:20px; }
-
-    .container-horizontal {
-      display:flex;
-      justify-content:center;
-      flex-wrap:wrap;
-      gap:30px;
-      margin-top:20px;
-    }
-
-    .trade-side, .money-box {
-      padding:20px;
-      border-radius:15px;
-      border:2px solid #ff9a00;
-      background:rgba(0,0,0,0.6);
-      box-shadow:0 0 20px rgba(255,154,0,0.4);
-      min-width:300px;
-      flex:1;
-    }
-
-    select, input, button { margin:5px; padding:6px; border-radius:6px; border:none; }
-    button { background:#ff9a00; font-weight:bold; cursor:pointer; }
-    button:hover { background:#ffaa00; }
-
-    .brainrot-container { display:flex; flex-wrap:wrap; justify-content:center; gap:5px; margin-bottom:8px; }
-    #result { font-size:28px; font-weight:bold; margin-top:15px; }
-
-    hr { border:2px solid #ff9a00; width:60%; margin:30px auto; opacity:0.6; }
-    .spacer { height:50px; }
-
+      background-size:400% 400%; animation:gradientBG 15s ease infinite; color:white; }
+    @keyframes gradientBG { 0%{background-position:0% 50%;} 50%{background-position:100% 50%;} 100%{background-position:0% 50%;} }
+    h1{color:#ff9a00;text-shadow:0 0 10px #ff9a00;margin-top:20px;}
+    .container-horizontal{display:flex;justify-content:center;flex-wrap:wrap;gap:30px;margin-top:20px;}
+    .trade-side,.money-box{padding:20px;border-radius:15px;border:2px solid #ff9a00;background:rgba(0,0,0,0.6);box-shadow:0 0 20px rgba(255,154,0,0.4);min-width:300px;flex:1;}
+    select,input,button{margin:5px;padding:6px;border-radius:6px;border:none;}
+    button{background:#ff9a00;font-weight:bold;cursor:pointer;}
+    button:hover{background:#ffaa00;}
+    .brainrot-container{display:flex;flex-wrap:wrap;justify-content:center;gap:5px;margin-bottom:8px;}
+    #result{font-size:28px;font-weight:bold;margin-top:15px;}
+    hr{border:2px solid #ff9a00;width:60%;margin:30px auto;opacity:0.6;}
+    .spacer{height:50px;}
   </style>
 </head>
-
 <body>
 
-<h1>🔥 Survive Lava For Brainrot Trade Calculator 🔥</h1>
+<h1>🔥 Brainrot Trade + Money Calculator 🔥</h1>
 
 <div class="container-horizontal">
 
@@ -92,20 +62,12 @@
 
 <div class="spacer"></div>
 
-<div style="
-  padding:30px 0;
-  font-size:26px;
-  font-weight:bold;
-  color:#ffd700;
-  text-shadow:0 0 15px #ff7f50,0 0 25px #ff4500;
-  background:rgba(0,0,0,0.8);
-">
+<div style="padding:30px 0;font-size:26px;font-weight:bold;color:#ffd700;text-shadow:0 0 15px #ff7f50,0 0 25px #ff4500;background:rgba(0,0,0,0.8);">
   Owner DC: qz94_<br>
   Credits to: Exotic4410
 </div>
 
 <script>
-
 // ================= VALUES =================
 const brainrots = {
   "Disk": {Base:4,Gold:6,Diamond:8,Emerald:12,BloodMoon:16,Rainbow:40},
@@ -125,67 +87,42 @@ const moonMultiplier = 3;
 
 // ================= TRADE SYSTEM =================
 function createBrainrotSlot(){
-  const container=document.createElement("div");
-  container.className="brainrot-container";
-
+  const container=document.createElement("div"); container.className="brainrot-container";
   const selectBrainrot=document.createElement("select");
   Object.keys(brainrots).forEach(b=>{ const opt=document.createElement("option"); opt.value=b; opt.text=b; selectBrainrot.appendChild(opt);});
-
   const selectMutation=document.createElement("select");
   mutations.forEach(m=>{ const opt=document.createElement("option"); opt.value=m; opt.text=m; selectMutation.appendChild(opt);});
-
   const moon=document.createElement("input"); moon.type="checkbox";
   const moonLabel=document.createElement("label"); moonLabel.innerText="Moon x3"; moonLabel.appendChild(moon);
-
   const valueDisplay=document.createElement("span");
-
   const remove=document.createElement("button"); remove.innerText="Remove"; remove.onclick=()=>{container.remove(); updateTotals();};
-
   function updateValue(){
     const val=brainrots[selectBrainrot.value][selectMutation.value]*(moon.checked?moonMultiplier:1);
-    valueDisplay.innerText=val+"m";
-    updateTotals();
+    valueDisplay.innerText=val+"m"; updateTotals();
   }
-
-  selectBrainrot.onchange=updateValue;
-  selectMutation.onchange=updateValue;
-  moon.onchange=updateValue;
-
-  container.appendChild(selectBrainrot);
-  container.appendChild(selectMutation);
-  container.appendChild(moonLabel);
-  container.appendChild(valueDisplay);
-  container.appendChild(remove);
-
+  selectBrainrot.onchange=updateValue; selectMutation.onchange=updateValue; moon.onchange=updateValue;
+  container.appendChild(selectBrainrot); container.appendChild(selectMutation); container.appendChild(moonLabel);
+  container.appendChild(valueDisplay); container.appendChild(remove);
   return container;
 }
-
 document.getElementById("yourSide").appendChild(createBrainrotSlot());
 document.getElementById("theirSide").appendChild(createBrainrotSlot());
-
 function addSlot(side){ document.getElementById(side).appendChild(createBrainrotSlot()); }
-
 function calculateTotal(side){
   let total=0;
   document.querySelectorAll("#"+side+" .brainrot-container").forEach(c=>{
-    const selects=c.querySelectorAll("select");
-    const brain=selects[0].value;
-    const mutation=selects[1].value;
+    const selects=c.querySelectorAll("select"); const brain=selects[0].value; const mutation=selects[1].value;
     const moon=c.querySelector("input").checked?moonMultiplier:1;
     total+=brainrots[brain][mutation]*moon;
   });
   return total;
 }
-
 function updateTotals(){
   document.getElementById("yourTotalDisplay").innerText="Total: "+calculateTotal("yourSide")+"m";
   document.getElementById("theirTotalDisplay").innerText="Total: "+calculateTotal("theirSide")+"m";
 }
-
 function checkTrade(){
-  const your=calculateTotal("yourSide");
-  const their=calculateTotal("theirSide");
-  const result=document.getElementById("result");
+  const your=calculateTotal("yourSide"); const their=calculateTotal("theirSide"); const result=document.getElementById("result");
   if(your>their){ result.innerText="LOSE ❌"; result.style.color="red"; }
   else if(your<their){ result.innerText="WIN ✅"; result.style.color="lime"; }
   else{ result.innerText="FAIR 🤝"; result.style.color="orange"; }
@@ -196,24 +133,33 @@ const moneyDropdown=document.getElementById("moneyBrainrot");
 Object.keys(brainrots).forEach(name=>{
   const opt=document.createElement("option"); opt.value=name; opt.text=name+" (Base: "+brainrots[name].Base+"m)"; moneyDropdown.appendChild(opt);
 });
-
 [moneyDropdown,document.getElementById("moneyLevel"),document.getElementById("moneyMultiplier")].forEach(el=>el.addEventListener("input",calculateMoney));
+
 function calculateMoney(){
   const brain=moneyDropdown.value;
   const level=parseInt(document.getElementById("moneyLevel").value);
   const multi=parseFloat(document.getElementById("moneyMultiplier").value);
   if(level<1||level>100||multi<=0) return;
   const base=brainrots[brain].Base;
-  const result=base*Math.pow(1.25,level)*multi;
-  document.getElementById("formulaDisplay").innerText=base+" × (1.25^"+level+") × "+multi;
-  document.getElementById("moneyResult").innerText="Result: "+formatLarge(result);
+
+  const basePower = base * multi;             // Base Power
+  const levelMultiplier = Math.pow(1.25, level-1); // Level scaling
+
+  const finalTotal = basePower * levelMultiplier;
+
+  document.getElementById("formulaDisplay").innerText = `${base} × ${multi} = ${basePower}M → × Level Multiplier (1.25^${level-1} ≈ ${formatLarge(levelMultiplier)})`;
+  document.getElementById("moneyResult").innerText = "Result: "+formatLarge(finalTotal)+"/s";
 }
+
+// ================= BIG NUMBER FORMAT =================
 function formatLarge(num){
-  const units=[{v:1e33,s:"De"},{v:1e30,s:"No"},{v:1e27,s:"Oc"},{v:1e24,s:"Sp"},{v:1e21,s:"Sx"},{v:1e18,s:"Qi"},{v:1e15,s:"Qd"},{v:1e12,s:"T"},{v:1e9,s:"B"},{v:1e6,s:"M"}];
+  const units=[
+    {v:1e33,s:"Qy"}, {v:1e30,s:"Qi"}, {v:1e27,s:"Sx"}, {v:1e24,s:"Sp"}, {v:1e21,s:"Sx"},
+    {v:1e18,s:"Qi"}, {v:1e15,s:"Qd"}, {v:1e12,s:"T"}, {v:1e9,s:"B"}, {v:1e6,s:"M"}
+  ];
   for(let i=0;i<units.length;i++){ if(num>=units[i].v) return (num/units[i].v).toFixed(2)+units[i].s; }
   return num.toFixed(2);
 }
-
 </script>
 </body>
 </html>
