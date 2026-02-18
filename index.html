@@ -110,7 +110,7 @@ function createBrainrotSlot(){
   const remove=document.createElement("button"); remove.innerText="Remove"; remove.onclick=()=>{container.remove(); updateTotals();};
   function updateValue(){
     const val=brainrots[selectBrainrot.value][selectMutation.value]*(moon.checked?moonMultiplier:1);
-    valueDisplay.innerText=formatShort(val);
+    valueDisplay.innerText=formatShortInt(val);
     updateTotals();
   }
   selectBrainrot.onchange=updateValue; selectMutation.onchange=updateValue; moon.onchange=updateValue;
@@ -131,8 +131,8 @@ function calculateTotal(side){
   return total;
 }
 function updateTotals(){
-  document.getElementById("yourTotalDisplay").innerText="Total: "+formatShort(calculateTotal("yourSide"));
-  document.getElementById("theirTotalDisplay").innerText="Total: "+formatShort(calculateTotal("theirSide"));
+  document.getElementById("yourTotalDisplay").innerText="Total: "+formatShortInt(calculateTotal("yourSide"));
+  document.getElementById("theirTotalDisplay").innerText="Total: "+formatShortInt(calculateTotal("theirSide"));
 }
 function checkTrade(){
   const your=calculateTotal("yourSide"); const their=calculateTotal("theirSide"); const result=document.getElementById("result");
@@ -146,7 +146,7 @@ const moneyDropdown=document.getElementById("moneyBrainrot");
 const moneyMutation=document.getElementById("moneyMutation");
 const moneyMoon=document.getElementById("moneyMoon");
 Object.keys(brainrots).forEach(name=>{
-  const opt=document.createElement("option"); opt.value=name; opt.text=name+" (Base: "+formatShort(brainrots[name].Base)+")"; moneyDropdown.appendChild(opt);
+  const opt=document.createElement("option"); opt.value=name; opt.text=name+" (Base: "+formatShortInt(brainrots[name].Base)+")"; moneyDropdown.appendChild(opt);
 });
 mutations.forEach(m=>{
   const opt=document.createElement("option"); opt.value=m; opt.text=m;
@@ -161,16 +161,16 @@ function calculateMoney(){
   const multi=parseFloat(document.getElementById("moneyMultiplier").value);
   if(level<1||level>100||multi<=0) return;
   const base=brainrots[brain][mutation];
-  const basePower = base * multi * moon;
-  const levelMultiplier = Math.pow(1.25, level-1);
+  const basePower = base * multi * moon;       // Moon applies here only
+  const levelMultiplier = Math.pow(1.25, level-1); // Level only
   const finalTotal = basePower * levelMultiplier;
   document.getElementById("formulaDisplay").style.display="none"; // hidden
   document.getElementById("moneyResult").innerText = "Result: "+formatShortHuge(finalTotal);
 }
 
 // ================= FORMAT FUNCTIONS =================
-function formatShort(num){
-  if(num>=1000000) return (num/1000000).toFixed(2)+"M";
+function formatShortInt(num){
+  if(num>=1000000) return Math.floor(num/1000000)+"M";
   return num.toLocaleString();
 }
 function formatShortHuge(num){
