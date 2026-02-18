@@ -267,8 +267,8 @@ function calculateUpgradeCost(){
   const mutation=document.getElementById("upgradeMutation").value;
   const moon=document.getElementById("upgradeMoon").checked?moonMultiplier:1;
 
-  const start=parseInt(document.getElementById("startLevel").value);
-  const end=parseInt(document.getElementById("endLevel").value);
+  let start=parseInt(document.getElementById("startLevel").value);
+  let end=parseInt(document.getElementById("endLevel").value);
 
   if(start<1) start=1;
   if(end>100) end=100;
@@ -285,8 +285,9 @@ function calculateUpgradeCost(){
   `Total Cost: ${formatHuge(total)}`;
 }
 
+// Format large numbers with Sp instead of Oc
 function formatHuge(num){
-  const units=["M","B","T","Qd","Qn","Sx","Oc","No","Dc"];
+  const units=["M","B","T","Qd","Qn","Sx","Sp","No","Dc"];
   let i=0;
   while(num>=1000 && i<units.length-1){
     num/=1000;
